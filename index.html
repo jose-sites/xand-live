@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Hunter do Xand</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#6fd8ff;--gold2:#3aa8e6;--dark:#0a0d12;--darker:#05070a;
+  --card:#0e131a;--card2:#131b24;--border:#1c2630;--border2:#2b3d4c;
+  --text:#d9e6ee;--text2:#7d8fa0;--red:#ff4d5e;--green:#22c55e;
+  --pp:#00c2ff;--pg:#ff6b35;--hack:#a855f7;--nolimit:#ff4466;--btg:#22c55e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%}
+body{font-family:'Rajdhani',sans-serif;color:var(--text);overflow-x:hidden;-webkit-user-select:none;user-select:none;
+  background:
+    radial-gradient(ellipse 900px 520px at 50% -8%, rgba(111,216,255,0.20), transparent 62%),
+    radial-gradient(ellipse 700px 500px at 100% 25%, rgba(58,168,230,0.12), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 0% 70%, rgba(58,168,230,0.10), transparent 60%),
+    var(--darker)}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.03) 3px,rgba(0,0,0,0.03) 4px)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-repeat:no-repeat;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 18%, rgba(111,216,255,0.55), transparent),
+    radial-gradient(2px 2px at 82% 12%, rgba(111,216,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 60% 38%, rgba(111,216,255,0.32), transparent),
+    radial-gradient(2px 2px at 25% 62%, rgba(111,216,255,0.28), transparent),
+    radial-gradient(1.5px 1.5px at 92% 55%, rgba(111,216,255,0.32), transparent),
+    radial-gradient(2px 2px at 45% 80%, rgba(111,216,255,0.22), transparent),
+    radial-gradient(1.5px 1.5px at 12% 48%, rgba(111,216,255,0.26), transparent),
+    radial-gradient(2px 2px at 70% 92%, rgba(111,216,255,0.2), transparent),
+    radial-gradient(1.5px 1.5px at 38% 8%, rgba(111,216,255,0.3), transparent),
+    radial-gradient(2px 2px at 95% 85%, rgba(111,216,255,0.22), transparent)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;
+  background:rgba(6,8,16,0.55);border-bottom:1px solid var(--border2);
+  backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem}
+.site-tabs{position:fixed;top:60px;left:0;right:0;height:46px;z-index:499;
+  background:rgba(9,12,20,0.92);border-bottom:1px solid var(--border2);
+  backdrop-filter:blur(16px);display:flex;align-items:stretch;justify-content:center;gap:.4rem;padding:0 1rem}
+.site-tab-btn{background:none;border:none;color:var(--text2);cursor:pointer;
+  font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;
+  display:flex;align-items:center;gap:6px;padding:0 .9rem;border-bottom:2px solid transparent;transition:all .2s}
+.site-tab-btn:hover{color:var(--text)}
+.site-tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.site-view{display:none}
+.site-view.active{display:block}
+main.site-view.active{display:flex}
+.page-view{padding-top:106px;min-height:100vh;padding-left:1.5rem;padding-right:1.5rem;padding-bottom:2.5rem}
+.page-inner{max-width:760px;margin:0 auto}
+.page-hero{text-align:center;padding:1.6rem 0 1.2rem}
+.page-hero h1{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:#fff;margin-bottom:6px}
+.page-hero p{color:var(--text2);font-size:14px}
+.step-card{display:flex;gap:14px;background:var(--card);border:1px solid var(--border2);border-radius:14px;
+  padding:16px;margin-bottom:12px;align-items:flex-start}
+.step-num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:rgba(111,216,255,0.12);
+  border:1px solid rgba(111,216,255,0.35);color:var(--gold);display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:16px}
+.step-body h3{font-size:15px;color:#fff;margin-bottom:3px}
+.step-body p{font-size:13px;color:var(--text2);line-height:1.5}
+.winbet-cta{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
+  background:linear-gradient(135deg,rgba(111,216,255,0.1),rgba(111,216,255,0.03));
+  border:1px solid rgba(111,216,255,0.3);border-radius:16px;padding:1.6rem;margin:1.4rem 0}
+.winbet-cta p{color:var(--text2);font-size:13px}
+.winbet-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;text-decoration:none;
+  border-radius:12px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;
+  box-shadow:0 4px 20px rgba(111,216,255,0.3);transition:transform .2s}
+.winbet-btn:hover{transform:translateY(-2px)}
+#pubRankList .ri{padding:12px 0}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;
+  background:linear-gradient(135deg,var(--gold),#bfeeff,var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 12px rgba(111,216,255,0.6))}
+.logo em{-webkit-text-fill-color:var(--gold);color:var(--gold);font-style:normal}
+
+/* STATUS BADGE */
+.rinha-status{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.status-dot.open{background:var(--green);box-shadow:0 0 6px var(--green)}
+.status-dot.closed{background:var(--red);box-shadow:0 0 6px var(--red)}
+.status-text{color:var(--text2)}
+
+.nav-admin{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;
+  font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;
+  border:none;padding:9px 22px;border-radius:999px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;box-shadow:0 4px 18px rgba(111,216,255,0.35)}
+.nav-admin:hover{box-shadow:0 4px 16px rgba(111,216,255,0.4);transform:translateY(-1px)}
+
+main{padding-top:106px;display:flex;height:calc(100vh - 106px);overflow:hidden;position:relative;z-index:1}
+
+/* MOBILE NAV TABS */
+.mobile-tabs{display:none;position:fixed;bottom:0;left:0;right:0;z-index:400;
+  background:rgba(6,8,16,0.98);border-top:1px solid var(--border2);
+  backdrop-filter:blur(16px)}
+.mobile-tab-btns{display:flex}
+.mtab{flex:1;padding:12px 8px 14px;font-family:'Bebas Neue',sans-serif;font-size:14px;
+  letter-spacing:1.5px;text-align:center;cursor:pointer;background:none;border:none;
+  color:var(--text2);transition:all 0.2s}
+.mtab.active{color:var(--gold)}
+.mtab.active::after{content:'';display:block;width:32px;height:2px;background:var(--gold);
+  margin:4px auto 0;border-radius:2px}
+
+.left{flex:1;overflow-y:auto;padding:1.2rem 1.4rem;background:var(--dark);position:relative;height:calc(100vh - 106px)}
+.left::-webkit-scrollbar{width:3px}
+.left::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.left-locked{overflow:hidden!important}
+.left-locked::after{content:'';position:absolute;inset:0;z-index:50;
+  background:rgba(3,4,7,0.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  pointer-events:all;cursor:not-allowed}
+.lock-msg{display:none;position:absolute;inset:0;z-index:51;align-items:center;justify-content:center;
+  gap:10px;font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:4px;color:var(--text2);
+  pointer-events:none;text-align:center;padding:0 1rem}
+.left-locked .lock-msg{display:flex}
+.lock-msg svg{flex-shrink:0}
+
+@media(max-width:700px){
+  :root{
+    font-size: 14px;
+  }
+  body main{flex-direction:column;height:auto;min-height:calc(100vh - 90px);overflow:visible;padding-top:90px;padding-bottom:70px}
+  body .site-tabs{top:50px;height:40px}
+  body .site-tab-btn{font-size:12px;padding:0 .6rem;gap:4px}
+  body .page-view{padding-top:90px}
+  body .left{width:100%;flex:none;height:auto;overflow:visible;padding:0.8rem 0.8rem;min-height:auto}
+  body .right{width:100%;min-width:0;border-left:none;border-top:1px solid var(--border2);
+    display:none;min-height:auto;max-height:70vh;overflow-y:auto;padding:0.8rem;height:auto}
+  body .right.mobile-active{display:flex}
+  body .mobile-tabs{display:block;height:70px}
+  body .slots-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px}
+  body .logo{font-size:16px;letter-spacing:2px}
+  body .rinha-status{font-size:9px}
+  body .status-text{display:none}
+  .ap-body{grid-template-columns:1fr!important}
+  body nav{height:50px;padding:0 1rem}
+  body .nav-admin{padding:6px 12px;font-size:11px}
+  body .search-bar input{font-size:13px;padding:9px 38px 9px 12px}
+  body .search-ico{font-size:14px;right:10px}
+  body .plat-btn{padding:6px 14px;font-size:11px}
+  body .prov-tab{padding:4px 10px;font-size:9px}
+  body .sc-name{font-size:12px}
+  body .sc-prov{font-size:9px}
+  body .sel-name{font-size:15px}
+  body .bonus-big{font-size:28px}
+  body .sub-btn{font-size:15px;padding:11px}
+  body .mtab{font-size:12px;padding:10px 6px 12px}
+  body .manual-wrap{margin-bottom:0.8rem}
+  body .manual-row{gap:6px}
+  body .sec-hdr h2{font-size:15px}
+  body .q-hdr{margin-bottom:0.8rem}
+  body .right{padding:0.8rem 0.8rem}
+}
+
+@media(max-width:480px){
+  :root{
+    font-size: 12px;
+  }
+  body main{min-height:calc(100vh - 88px);padding-top:88px;padding-bottom:60px}
+  body .site-tabs{top:48px;height:40px}
+  body .site-tab-btn{font-size:10px;padding:0 .4rem}
+  body .page-view{padding-top:88px}
+  body nav{height:48px;padding:0 0.8rem}
+  body .mobile-tabs{height:60px}
+  body .logo{font-size:14px;letter-spacing:1px}
+  body .nav-admin{padding:5px 10px;font-size:10px}
+  body .plat-btn{padding:5px 12px;font-size:10px}
+  body .slots-grid{grid-template-columns:repeat(auto-fill,minmax(85px,1fr));gap:5px}
+  body .search-bar input{font-size:12px;padding:8px 34px 8px 10px}
+  body .sel-preview{aspect-ratio:16/10}
+  body .sub-btn{font-size:13px;padding:10px;margin:0 0.6rem 1rem}
+  body .sc-name{font-size:11px}
+  body .bonus-big{font-size:24px}
+  body .mtab{font-size:11px;padding:8px 4px 10px}
+}
+
+@media(min-width:701px) and (max-width:1024px){
+  .slots-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+}
+
+.search-bar{position:relative;margin-bottom:1rem}
+.search-bar input{width:100%;padding:11px 46px 11px 16px;background:var(--card);
+  border:1px solid var(--border2);border-radius:12px;color:var(--text);
+  font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:500;outline:none;transition:all 0.2s}
+.search-bar input::placeholder{color:var(--text2)}
+.search-bar input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(111,216,255,0.1)}
+.search-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:16px;pointer-events:none}
+
+.plat-row{display:flex;gap:8px;margin-bottom:1rem}
+.plat-btn{padding:7px 20px;border-radius:999px;font-weight:700;font-size:12px;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer;transition:all 0.2s;border:1px solid var(--border2);
+  background:var(--card);color:var(--text2)}
+.plat-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;border-color:var(--gold);box-shadow:0 4px 16px rgba(111,216,255,0.3)}
+
+.prov-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1rem}
+.prov-tab{padding:5px 14px;border-radius:999px;font-weight:700;font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer;transition:all 0.2s;border:1px solid var(--border2);
+  background:var(--card);color:var(--text2)}
+.prov-tab:hover:not(.active){border-color:rgba(255,255,255,0.2);color:var(--text)}
+.prov-tab.active[data-prov="all"]{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;border-color:var(--gold)}
+.prov-tab.active[data-prov="pp"]{background:var(--pp);color:#000;border-color:var(--pp)}
+.prov-tab.active[data-prov="pg"]{background:var(--pg);color:#fff;border-color:var(--pg)}
+.prov-tab.active[data-prov="hack"]{background:var(--hack);color:#fff;border-color:var(--hack)}
+.prov-tab.active[data-prov="nolimit"]{background:var(--nolimit);color:#fff;border-color:var(--nolimit)}
+.prov-tab.active[data-prov="btg"]{background:var(--btg);color:#000;border-color:var(--btg)}
+.prov-tab.active[data-prov="outros"]{background:#888;color:#000;border-color:#888}
+
+.manual-wrap{margin-bottom:1rem}
+.manual-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:5px}
+.manual-row{display:flex;gap:8px}
+.manual-row input{flex:1;padding:9px 12px;background:var(--card);border:1px solid var(--border2);
+  border-radius:10px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;
+  outline:none;transition:border-color 0.2s}
+.manual-row input:focus{border-color:var(--gold)}
+.manual-row input::placeholder{color:var(--text2);font-weight:400}
+.manual-ok{padding:9px 16px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;
+  border:none;border-radius:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.5px;cursor:pointer;white-space:nowrap}
+
+.sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.sec-hdr h2{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:#fff}
+.cnt-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  background:rgba(111,216,255,0.12);color:var(--gold);border:1px solid rgba(111,216,255,0.3);
+  padding:4px 12px;border-radius:999px}
+
+.slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:14px;
+  cursor:pointer;transition:all 0.2s;overflow:hidden;position:relative}
+.sc:hover{border-color:rgba(111,216,255,0.6);transform:translateY(-3px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.6),0 0 0 1px rgba(111,216,255,0.2)}
+.sc.selected{border-color:var(--gold);box-shadow:0 0 0 2px rgba(111,216,255,0.5),0 8px 28px rgba(0,0,0,0.6)}
+.sc.hidden{display:none}
+.sc-thumb{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+  background:linear-gradient(135deg,#0d1a30,#091020);transition:transform 0.3s}
+.sc:hover .sc-thumb{transform:scale(1.04)}
+.sc-prov-badge{position:absolute;top:7px;left:7px;font-size:9px;font-weight:700;
+  letter-spacing:.5px;padding:3px 7px;border-radius:4px;text-transform:uppercase;
+  backdrop-filter:blur(6px)}
+.badge-pp{background:rgba(0,0,0,0.6);color:var(--pp);border:1px solid rgba(0,194,255,0.4)}
+.badge-pg{background:rgba(0,0,0,0.6);color:var(--pg);border:1px solid rgba(255,107,53,0.4)}
+.badge-hack{background:rgba(0,0,0,0.6);color:var(--hack);border:1px solid rgba(168,85,247,0.4)}
+.badge-nolimit{background:rgba(0,0,0,0.6);color:var(--nolimit);border:1px solid rgba(255,68,102,0.4)}
+.badge-btg{background:rgba(0,0,0,0.6);color:var(--btg);border:1px solid rgba(34,197,94,0.4)}
+.badge-outros{background:rgba(0,0,0,0.6);color:#aaa;border:1px solid rgba(120,120,120,0.4)}
+.sc-check{position:absolute;top:7px;right:7px;width:22px;height:22px;border-radius:50%;
+  background:var(--gold);display:flex;align-items:center;justify-content:center;
+  font-size:12px;opacity:0;transition:opacity 0.15s;color:#06080e;font-weight:700}
+.sc.selected .sc-check{opacity:1}
+.sc-info{padding:8px 10px 10px}
+.sc-name{font-weight:700;font-size:13px;color:#fff;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-prov{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text2)}
+
+.right{width:320px;min-width:320px;background:var(--card);border-left:1px solid var(--border2);
+  display:flex;flex-direction:column;overflow-y:auto;height:calc(100vh - 106px)}
+.right::-webkit-scrollbar{width:3px}
+.right::-webkit-scrollbar-thumb{background:var(--border2)}
+.panel-hdr{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;
+  color:var(--text2);text-align:center;padding:.9rem;border-bottom:1px solid var(--border);
+  background:rgba(0,0,0,0.5)}
+.sel-preview{margin:.8rem;border-radius:10px;overflow:hidden;border:1px solid var(--border2);
+  background:var(--darker);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+.sel-preview img{width:100%;height:100%;object-fit:cover;display:block}
+.no-sel{text-align:center;color:var(--text2)}
+.no-sel .q{font-size:40px;opacity:0.15;display:block}
+.no-sel p{font-size:12px;margin-top:6px;line-height:1.5}
+.sel-name{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;
+  text-align:center;color:#fff;padding:0 .8rem 2px}
+.sel-sub{font-size:11px;color:var(--text2);text-align:center;padding:0 .8rem .8rem;
+  font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.nick-row{display:flex;align-items:center;margin:0 .8rem .8rem;padding:9px 12px;
+  background:var(--darker);border:1px solid var(--border2);border-radius:12px;cursor:pointer;gap:8px;transition:border-color 0.2s}
+.nick-row:hover{border-color:rgba(111,216,255,0.4)}
+.nick-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);flex-shrink:0}
+.nick-val{font-size:14px;font-weight:700;color:#fff;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bonus-sec{margin:0 .8rem .8rem}
+.bonus-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:6px}
+.bonus-big{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;text-align:center;color:#fff;line-height:1}
+.bonus-wait{font-size:13px;font-weight:700;color:var(--text2);text-align:center;
+  padding:9px;background:rgba(0,0,0,0.4);border-radius:6px;border:1px solid var(--border);letter-spacing:.5px}
+.rules{margin:0 .8rem .8rem;padding:10px 12px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border)}
+.rules-t{font-weight:700;font-size:13px;color:#fff;margin-bottom:7px}
+.rule{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px;font-size:12px;color:var(--text2);line-height:1.4}
+.rule::before{content:'●';color:var(--red);flex-shrink:0;font-size:7px;margin-top:5px}
+.accept{display:flex;align-items:center;gap:8px;margin:0 .8rem .8rem;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer}
+.accept input{width:14px;height:14px;cursor:pointer;accent-color:var(--gold)}
+.sub-btn{margin:0 .8rem 1.2rem;padding:13px;border-radius:12px;border:none;cursor:pointer;
+  font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;transition:all 0.2s;width:calc(100% - 1.6rem)}
+.sub-btn.off{background:rgba(34,197,94,0.1);color:rgba(34,197,94,0.25);cursor:not-allowed;border:1px solid rgba(34,197,94,0.1)}
+.sub-btn.on{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;box-shadow:0 4px 20px rgba(34,197,94,0.3)}
+.sub-btn.on:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(34,197,94,0.4)}
+
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:600;
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:var(--card2);border:1px solid var(--border2);border-radius:18px;padding:1.8rem;width:360px;max-width:92vw}
+.modal h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:.8rem}
+.modal input{width:100%;padding:11px 14px;background:var(--darker);border:1px solid var(--border2);
+  border-radius:7px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;
+  outline:none;margin-bottom:.8rem;transition:border-color 0.2s}
+.modal input:focus{border-color:var(--gold)}
+.modal-btns{display:flex;gap:8px}
+.modal-btns button{flex:1;padding:10px;border-radius:6px;border:none;cursor:pointer;
+  font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;transition:all 0.2s}
+.m-ok{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;border-radius:8px}
+.m-cancel{background:var(--darker)!important;color:var(--text2)!important;border:1px solid var(--border2)!important}
+
+#resMod{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:900;align-items:center;justify-content:center}
+#resMod.open{display:flex}
+.res-card{background:linear-gradient(160deg,#171018,#0c090c);border:1px solid var(--border2);
+  border-radius:22px;padding:2rem;width:400px;max-width:92vw;position:relative;
+  box-shadow:0 32px 80px rgba(0,0,0,0.8)}
+.res-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),#bfeeff,var(--gold));border-radius:22px 22px 0 0}
+.res-close{position:absolute;top:14px;right:16px;background:none;border:none;cursor:pointer;color:var(--text2);font-size:20px}
+.res-close:hover{color:#fff}
+.res-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--text2);margin-bottom:1rem}
+.res-nick{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;color:#fff;margin-bottom:3px;word-break:break-all}
+.res-slot{font-size:13px;color:var(--text2);margin-bottom:1.4rem;font-weight:600}
+.res-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin-bottom:6px}
+.res-input-wrap{display:flex;align-items:center;background:var(--darker);border:1px solid var(--border2);
+  border-radius:10px;overflow:hidden;margin-bottom:1.4rem;transition:border-color 0.2s}
+.res-input-wrap:focus-within{border-color:var(--gold)}
+.res-prefix{padding:12px 16px;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--text2);border-right:1px solid var(--border2);flex-shrink:0}
+.res-val-input{flex:1;padding:12px 16px;background:transparent;border:none;color:#fff;
+  font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;outline:none;width:0}
+.res-val-input::placeholder{color:var(--border2);font-size:20px}
+.res-btns{display:flex;gap:10px}
+.res-btn-r{flex:1;padding:13px;background:linear-gradient(135deg,#c0392b,#96281b);color:#fff;
+  border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;cursor:pointer;transition:all 0.2s}
+.res-btn-r:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(192,57,43,0.4)}
+.res-btn-s{flex:1;padding:13px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
+  border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;cursor:pointer;transition:all 0.2s}
+.res-btn-s:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(34,197,94,0.4)}
+.res-btn-later{width:100%;margin-top:8px;padding:11px;background:rgba(111,216,255,0.08);color:var(--gold);
+  border:1px solid rgba(111,216,255,0.3);border-radius:10px;font-family:'Bebas Neue',sans-serif;
+  font-size:14px;letter-spacing:1.5px;cursor:pointer;transition:all 0.2s}
+.res-btn-later:hover{background:rgba(111,216,255,0.15)}
+.ri-badge.pending{background:rgba(255,183,3,0.15);border-color:rgba(255,183,3,0.35);color:#ffb703}
+.ri-pending-form{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.ri-pending-form input{width:76px;padding:7px 9px;background:var(--darker);border:1px solid var(--border2);
+  border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;outline:none}
+.ri-pending-form input:focus{border-color:var(--gold)}
+.ri-pending-form button{padding:7px 10px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
+  border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
+
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:1000;padding:14px 22px;
+  border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;
+  transform:translateY(80px);opacity:0;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.ok{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;box-shadow:0 6px 24px rgba(34,197,94,0.4)}
+.toast.err{background:linear-gradient(135deg,#e03a3a,#b91c1c);color:#fff;box-shadow:0 6px 24px rgba(224,58,58,0.4)}
+.toast.info{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;box-shadow:0 6px 24px rgba(111,216,255,0.4)}
+
+#al{display:none;position:fixed;inset:0;background:var(--darker);z-index:800;align-items:center;justify-content:center}
+#al.open{display:flex}
+.lcard{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:2.4rem;width:380px;max-width:92vw}
+.l-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;text-align:center;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.l-sub{text-align:center;color:var(--text2);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:2rem}
+.lcard label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);display:block;margin-bottom:5px}
+.lcard input{width:100%;padding:11px 14px;background:var(--darker);border:1px solid var(--border2);
+  border-radius:7px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;
+  outline:none;margin-bottom:.8rem;transition:border-color 0.2s}
+.lcard input:focus{border-color:var(--gold)}
+.l-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#08131c;border:none;border-radius:12px;font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 20px rgba(111,216,255,0.3)}
+.l-btn:hover{box-shadow:0 4px 20px rgba(111,216,255,0.4)}
+.l-err{color:var(--red);font-size:12px;text-align:center;margin-top:7px;display:none}
+.l-back{background:none;border:none;cursor:pointer;color:var(--text2);font-size:12px;
+  font-family:'Rajdhani',sans-serif;font-weight:600;margin-top:.8rem;display:block;width:100%;text-align:center}
+
+#ap{display:none;position:fixed;inset:0;background:var(--darker);z-index:700;overflow-y:auto}
+#ap.open{display:block}
+.ap-nav{background:rgba(6,8,16,0.98);border-bottom:1px solid var(--border2);padding:0 1.5rem;
+  height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;backdrop-filter:blur(16px)}
+.ap-body{max-width:1200px;margin:0 auto;padding:1.5rem;display:flex;flex-direction:column;gap:1.5rem}
+.ap-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:1.4rem}
+.ap-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:#fff;margin-bottom:1.2rem}
+
+.wheel-wrap{position:relative;width:300px;height:300px;margin:0 auto .8rem}
+#wc{border-radius:50%;display:block}
+.w-ptr{position:absolute;right:-16px;top:50%;transform:translateY(-50%);width:0;height:0;
+  border-top:15px solid transparent;border-bottom:15px solid transparent;
+  border-right:30px solid var(--gold);filter:drop-shadow(0 0 8px rgba(111,216,255,0.6))}
+.spin-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#08131c;border:none;cursor:pointer;font-family:'Bebas Neue',sans-serif;
+  font-size:13px;letter-spacing:1px;display:flex;align-items:center;justify-content:center;
+  z-index:5;transition:all 0.2s;box-shadow:0 0 0 4px var(--card),0 0 0 7px var(--border2)}
+.spin-btn:hover:not(:disabled){transform:translate(-50%,-50%) scale(1.1);
+  box-shadow:0 0 0 4px var(--card),0 0 0 7px var(--gold),0 8px 24px rgba(111,216,255,0.5)}
+.spin-btn:disabled{opacity:0.4;cursor:not-allowed}
+.spin-status{text-align:center;margin-top:.8rem;padding:.7rem;background:var(--darker);
+  border-radius:8px;border:1px solid var(--border);min-height:52px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.spin-status-nick{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.5px;color:var(--gold)}
+.spin-status-info{font-size:11px;color:var(--text2);margin-top:2px;font-weight:600}
+
+.ctrl{margin-top:.8rem;padding:.9rem;background:var(--darker);border-radius:10px;border:1px solid var(--border)}
+.ctrl-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.ctrl-row{display:flex;gap:8px}
+.ctrl-row input{flex:1;padding:9px 12px;background:var(--card2);border:1px solid var(--border2);
+  border-radius:6px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;outline:none}
+.ctrl-row input:focus{border-color:var(--gold)}
+.ctrl-btn{padding:9px 16px;background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#08131c;border:none;border-radius:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
+.rinha-btns{display:flex;gap:8px;margin-top:8px}
+.r-open{flex:1;padding:10px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
+  border:none;border-radius:7px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;cursor:pointer}
+.r-close{flex:1;padding:10px;background:rgba(224,58,58,0.12);border:1px solid rgba(224,58,58,0.3);
+  color:var(--red);border-radius:7px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;cursor:pointer}
+
+.rtabs{display:flex;border-radius:8px;overflow:hidden;border:1px solid var(--border2);margin-bottom:1.2rem}
+.rtab{flex:1;padding:9px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;
+  text-align:center;cursor:pointer;background:var(--darker);color:var(--text2);border:none;transition:all 0.2s}
+.rtab.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c}
+
+.q-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.q-cnt{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:4px 10px;border-radius:4px;background:rgba(111,216,255,0.1);color:var(--gold);border:1px solid rgba(111,216,255,0.25)}
+.q-scroll{max-height:460px;overflow-y:auto}
+.q-scroll::-webkit-scrollbar{width:3px}
+.q-scroll::-webkit-scrollbar-thumb{background:var(--border2)}
+.qi{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.qi:last-child{border:none}
+.qi-num{width:26px;height:26px;border-radius:50%;background:rgba(111,216,255,0.1);
+  border:1px solid rgba(111,216,255,0.25);color:var(--gold);font-family:'Bebas Neue',sans-serif;
+  font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qi-thumb{width:42px;height:32px;border-radius:5px;object-fit:cover;background:var(--darker);border:1px solid var(--border);flex-shrink:0}
+.qi-b{flex:1;min-width:0}
+.qi-nick{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qi-det{font-size:11px;color:var(--text2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qi-plat{font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700;letter-spacing:.5px;margin-left:5px;text-transform:uppercase}
+.qi-winebet{background:rgba(255,0,0,0.15);color:var(--red)}
+.qi-888{background:rgba(0,194,255,0.15);color:var(--pp)}
+.qi-j7{background:rgba(168,85,247,0.15);color:var(--hack)}
+.qi-bonus{font-size:13px;font-weight:700;color:var(--green);flex-shrink:0}
+.qi-del{background:none;border:none;cursor:pointer;color:var(--text2);font-size:15px;padding:4px;transition:color 0.15s;flex-shrink:0}
+.qi-del:hover{color:var(--red)}
+.q-empty{text-align:center;padding:2.5rem;color:var(--text2);font-size:13px}
+.clear-btn{width:100%;margin-top:.8rem;padding:9px;border-radius:6px;
+  background:rgba(224,58,58,0.1);border:1px solid rgba(224,58,58,0.2);
+  color:var(--red);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.2s}
+.clear-btn:hover{background:rgba(224,58,58,0.2)}
+
+.rank-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1rem}
+.stat-box{background:var(--darker);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--gold)}
+.stat-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-top:2px}
+.rank-scroll{max-height:400px;overflow-y:auto}
+.rank-scroll::-webkit-scrollbar{width:3px}
+.rank-scroll::-webkit-scrollbar-thumb{background:var(--border2)}
+.ri{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.ri:last-child{border:none}
+.ri-pos{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:13px;flex-shrink:0}
+.ri-pos.gold{background:rgba(111,216,255,0.2);border:1px solid rgba(111,216,255,0.4);color:var(--gold)}
+.ri-pos.silver{background:rgba(180,180,200,0.15);border:1px solid rgba(180,180,200,0.3);color:#b0b8c8}
+.ri-pos.bronze{background:rgba(205,127,50,0.2);border:1px solid rgba(205,127,50,0.3);color:#cd7f32}
+.ri-pos.normal{background:rgba(74,100,128,0.15);border:1px solid rgba(74,100,128,0.2);color:var(--text2)}
+.ri-thumb{width:48px;height:36px;border-radius:5px;object-fit:cover;background:var(--darker);border:1px solid var(--border);flex-shrink:0}
+.ri-b{flex:1;min-width:0}
+.ri-nick{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ri-det{font-size:11px;color:var(--text2);margin-top:1px}
+.ri-val{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--green);flex-shrink:0}
+.ri-mult{font-size:11px;color:var(--text2);text-align:right;flex-shrink:0;white-space:nowrap}
+.ri-badge{background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);
+  color:var(--green);font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 6px;border-radius:3px;text-transform:uppercase}
+.rank-empty{text-align:center;padding:2.5rem;color:var(--text2);font-size:13px}
+.clear-rank-btn{width:100%;margin-top:.8rem;padding:9px;border-radius:6px;
+  background:rgba(74,100,128,0.08);border:1px solid rgba(74,100,128,0.2);
+  color:var(--text2);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all 0.2s}
+.clear-rank-btn:hover{background:rgba(224,58,58,0.1);border-color:rgba(224,58,58,0.25);color:var(--red)}
+
+/* Firebase loading */
+.fb-loading{position:fixed;inset:0;background:var(--darker);z-index:2000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
+.fb-loading.hide{display:none}
+.fb-spinner{width:40px;height:40px;border:3px solid var(--border2);border-top-color:var(--gold);
+  border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fb-txt{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--text2)}
+
+.brand-logo{height:40px;width:auto;display:block;filter:drop-shadow(0 0 10px rgba(111,216,255,0.35))}
+.brand-logo-lg{height:auto;width:220px;max-width:80%;display:block;margin:0 auto 6px;filter:drop-shadow(0 0 14px rgba(111,216,255,0.4))}
+.ap-nav .brand-logo{height:32px}
+
+@media(max-width:700px){
+  .modal{width:360px;max-width:90vw}
+  .lcard{width:300px;max-width:90vw}
+  .res-card{width:360px;max-width:90vw}
+  .modal input, .lcard input, .res-input-wrap input{font-size:16px}
+  .brand-logo{height:28px}
+  .ap-nav .brand-logo{height:26px}
+}
+@media(max-width:480px){
+  .brand-logo{height:24px}
+}
+
+
+/* ── ÍCONES FLUTUANTES ── */
+@keyframes iconFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-4px) rotate(-4deg)}
+}
+@keyframes iconFloat2{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-5px) rotate(4deg)}
+}
+.ico-float{display:inline-block;animation:iconFloat 2.8s ease-in-out infinite;will-change:transform}
+.ico-float.alt{animation-name:iconFloat2}
+@keyframes logoFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-3px)}
+}
+.brand-logo{animation:logoFloat 3.6s ease-in-out infinite}
+.brand-logo-lg{animation:logoFloat 3.6s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){
+  .ico-float,.brand-logo,.brand-logo-lg{animation:none}
+}
+
+/* ── PÁGINA RHYNO ── */
+.rhyno-hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:2rem 0 1rem}
+.rhyno-logo-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:190px;height:190px;border-radius:50%;
+  background:radial-gradient(circle,rgba(111,216,255,0.18),rgba(111,216,255,0.04) 62%,transparent 72%);
+  border:1px solid rgba(111,216,255,0.28);box-shadow:0 0 60px rgba(111,216,255,0.18),inset 0 0 40px rgba(111,216,255,0.08)}
+.rhyno-logo{max-width:62%;max-height:62%;object-fit:contain;filter:drop-shadow(0 0 14px rgba(111,216,255,0.45))}
+.rhyno-mark{flex-direction:column;align-items:center;gap:4px;color:var(--gold);filter:drop-shadow(0 0 14px rgba(111,216,255,0.45))}
+.rhyno-mark span{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;color:#fff}
+.rhyno-hero h1{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:6px;color:#fff;line-height:1}
+.rhyno-sub{color:var(--text2);font-size:15px;line-height:1.6;max-width:520px}
+.rhyno-points{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:560px;margin:.4rem 0}
+.rhyno-pt{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:14px 8px}
+.rhyno-pt b{width:30px;height:30px;border-radius:50%;background:rgba(111,216,255,0.12);border:1px solid rgba(111,216,255,0.35);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:15px;font-weight:400}
+.rhyno-pt span{font-size:13px;font-weight:600;color:var(--text);line-height:1.3}
+.rhyno-btn{padding:15px 38px;font-size:20px;margin-top:.4rem}
+.rhyno-note{font-size:12px;color:var(--text2)}
+@media(max-width:480px){.rhyno-points{grid-template-columns:1fr}.rhyno-pt{flex-direction:row;justify-content:flex-start;padding:10px 14px}.rhyno-logo-wrap{width:160px;height:160px}}
+
+/* ── ADMIN: participantes / Pix ── */
+.adm-in{padding:9px 12px;background:var(--card2);border:1px solid var(--border2);border-radius:6px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border-color .2s;width:100%}
+.adm-in:focus{border-color:var(--gold)}
+.qi-src{background:rgba(111,216,255,0.15);color:var(--gold)}
+.qi-src.manual{background:rgba(255,255,255,0.08);color:var(--text2)}
+.pix-row{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);margin-top:3px}
+.pix-val{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:1px;color:var(--text);user-select:text;-webkit-user-select:text;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pix-eye{background:none;border:1px solid var(--border2);color:var(--text2);border-radius:6px;cursor:pointer;padding:2px 7px;font-size:13px;line-height:1.3;flex-shrink:0;transition:all .15s}
+.pix-eye:hover{color:var(--gold);border-color:var(--gold)}
+.pix-eye-lg{padding:0 12px;font-size:16px}
+.pix-missing{color:var(--red);flex-wrap:wrap}
+.pix-missing input{flex:1;min-width:110px;padding:4px 8px;background:var(--card2);border:1px solid var(--red);border-radius:5px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:12px;outline:none}
+.pix-missing button{padding:4px 10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;border:none;border-radius:5px;font-weight:700;font-size:11px;cursor:pointer;font-family:'Rajdhani',sans-serif}
+
+/* ── ADMIN: palco (fila por ordem de chegada + roleta opcional) ── */
+.ap-tools{display:flex;gap:10px;flex-wrap:wrap}
+.tool-btn{padding:10px 18px;background:var(--card);border:1px solid var(--border2);border-radius:10px;color:var(--text2);cursor:pointer;
+  font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;transition:all .2s}
+.tool-btn:hover{color:var(--gold);border-color:var(--gold)}
+.tool-btn.on{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;border-color:var(--gold)}
+.ap-stage{display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:start}
+.ap-stage .stage-wheel{display:none}
+.ap-stage.wheel-on{grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr)}
+.ap-stage.wheel-on .stage-wheel{display:block}
+.stage-wheel .wheel-wrap{width:min(100%,440px);height:auto;aspect-ratio:1/1}
+.stage-wheel #wc{width:100%;height:100%}
+.ap-stage:not(.wheel-on) .q-scroll{max-height:none}
+.qi.first{border:1px solid rgba(111,216,255,0.55);background:rgba(111,216,255,0.07);border-radius:10px;padding-left:8px;padding-right:8px;box-shadow:0 0 18px rgba(111,216,255,0.12)}
+.qi-next{font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:4px;background:var(--gold);color:#08131c;margin-left:6px;vertical-align:middle}
+.qi-go{background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.4);color:var(--green);border-radius:6px;cursor:pointer;padding:4px 8px;font-size:14px;flex-shrink:0;transition:all .15s}
+.qi-go:hover{background:rgba(34,197,94,0.25)}
+body.wheel-off .res-btn-r{display:none}
+/* tela cheia: esconde controles e cadastro manual pra ficar limpo na live */
+body.is-full .ap-nav,body.is-full .ap-controls,body.is-full #manualBox{display:none}
+body.is-full .ap-body{max-width:none;padding:1rem 1.5rem}
+body.is-full .q-scroll{max-height:calc(100vh - 210px)}
+body.is-full .qi-nick{font-size:18px}
+body.is-full .pix-row{display:none} /* nunca mostra Pix na tela cheia (live) */
+@media(max-width:900px){.ap-stage.wheel-on{grid-template-columns:1fr}}
+.rhyno-status{font-size:12px;color:var(--text2);margin:8px 0;line-height:1.5}
+.rhyno-status.ok b{color:var(--green)}
+.rhyno-status.err b{color:var(--red)}
+.rhyno-status i{color:var(--gold);font-style:normal}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="fb-loading" id="fbLoad">
+  <div class="fb-spinner"></div>
+  <div class="fb-txt">Conectando ao servidor...</div>
+</div>
+
+<nav>
+  <img class="brand-logo" src="logo.png" alt="Hunter do Xand">
+  <div class="rinha-status">
+    <div class="status-dot closed" id="statusDot"></div>
+    <span class="status-text" id="statusTxt">Rinha fechada</span>
+  </div>
+  <button class="nav-admin" onclick="openAdmin()"><span class="ico-float" style="animation-delay:0.2s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2 2 0 1 1 7.03 4.24l.06.06A1.7 1.7 0 0 0 9 4.64a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/></svg></span> Admin</button>
+</nav>
+
+<div class="site-tabs">
+  <button class="site-tab-btn active" id="stab-rhyno" onclick="siteTab('rhyno')">
+    <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>
+    RHYNO
+  </button>
+  <button class="site-tab-btn" id="stab-como" onclick="siteTab('como')">
+    <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><circle cx="12" cy="16.3" r=".6" fill="currentColor" stroke="none"/></svg>
+    COMO JOGAR
+  </button>
+  <button class="site-tab-btn" id="stab-ranking" onclick="siteTab('ranking')">
+    <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 4h8v4a4 4 0 0 1-8 0V4z"/><path d="M8 5H5a3 3 0 0 0 3 4"/><path d="M16 5h3a3 3 0 0 1-3 4"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/></svg>
+    RANKING
+  </button>
+</div>
+
+<!-- RHYNO -->
+<div class="site-view page-view active" id="view-rhyno">
+  <div class="page-inner">
+    <div class="rhyno-hero">
+      <div class="rhyno-logo-wrap">
+        <!-- Coloque o arquivo oficial do logo da Rhyno como "rhyno-logo.png" na mesma pasta deste HTML -->
+        <img id="rhynoLogo" class="rhyno-logo" src="rhyno-logo.png" alt="Rhyno"
+             onerror="this.style.display='none';document.getElementById('rhynoMark').style.display='flex'">
+        <div class="rhyno-mark" id="rhynoMark" style="display:none">
+          <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><path d="M32 4l24 14v28L32 60 8 46V18z"/><path d="M24 44V22h10a7 7 0 0 1 0 14H24m10 0l8 8"/></svg>
+          <span>RHYNO</span>
+        </div>
+      </div>
+      <h1>RHYNO</h1>
+      <p class="rhyno-sub">A Rhyno é onde a fila do Xand acontece. Entre por lá para garantir a sua vaga — os participantes da fila são reunidos aqui no Hunter para a roleta.</p>
+      <div class="rhyno-points">
+        <div class="rhyno-pt"><b>1</b><span>Entre na Rhyno</span></div>
+        <div class="rhyno-pt"><b>2</b><span>Entre na fila do Xand</span></div>
+        <div class="rhyno-pt"><b>3</b><span>Acompanhe a roleta na live</span></div>
+      </div>
+      <a class="winbet-btn rhyno-btn" id="rhynoBtn" href="#" target="_blank" rel="noopener">IR PARA RHYNO</a>
+      <div class="rhyno-note">Você será levado para a fila oficial do Xand na Rhyno.</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMO JOGAR -->
+<div class="site-view page-view" id="view-como">
+  <div class="page-inner">
+    <div class="page-hero">
+      <h1>COMO JOGAR</h1>
+      <p>Entenda o passo a passo da rinha, do pedido até o resultado no ranking.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-body"><h3>Escolha o slot</h3>
+        <p>Na aba "Slots", procure o jogo que quer sugerir. Não achou? Dá pra digitar o nome manualmente.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-body"><h3>Informe seu nick</h3>
+        <p>Coloque o seu nick do Discord certinho — é ele que aparece na roleta e no ranking.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-body"><h3>Aceite as regras e pague</h3>
+        <p>Leia as regras, marque que aceitou e clique em pagar. O valor do ticket é o mesmo pra todo mundo, definido pelo streamer.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-body"><h3>Pagamento confirmado</h3>
+        <p>Assim que o pagamento é confirmado, sua call entra na fila automaticamente — sem precisar de aprovação manual.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div class="step-body"><h3>Roleta e resultado</h3>
+        <p>Quando a rinha girar e a sua call sair sorteada, acompanhe o resultado na aba "Ranking" aqui do site.</p></div>
+    </div>
+
+    <div class="winbet-cta">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff">JOGUE NA WINBET</div>
+      <p>Essa é a casa oficial usada nas calls da rinha.</p>
+      <!-- TODO: preencher WINBET_LINK lá no <script>, no topo do arquivo, com o link real da Winbet -->
+      <a class="winbet-btn" id="winbetBtn" href="#" target="_blank" rel="noopener">IR PARA A WINBET</a>
+    </div>
+  </div>
+</div>
+
+<!-- RANKING PÚBLICO -->
+<div class="site-view page-view" id="view-ranking">
+  <div class="page-inner">
+    <div class="page-hero">
+      <h1>RANKING AO VIVO</h1>
+      <p>Atualiza automaticamente, em tempo real, pra qualquer visitante.</p>
+    </div>
+    <div class="rank-stats">
+      <div class="stat-box"><div class="stat-val" id="pub-st-tot">0</div><div class="stat-lbl">Total de calls</div></div>
+      <div class="stat-box"><div class="stat-val" id="pub-st-sum">R$0</div><div class="stat-lbl">Total pago</div></div>
+      <div class="stat-box"><div class="stat-val" id="pub-st-max">R$0</div><div class="stat-lbl">Maior pagou</div></div>
+    </div>
+    <div id="pubRankList"></div>
+  </div>
+</div>
+
+<!-- RESULTADO MODAL -->
+<div id="resMod">
+  <div class="res-card">
+    <div class="res-title">Lançar resultado</div>
+    <button class="res-close" onclick="closeRes()"><span class="ico-float" style="animation-delay:0s">✕</span></button>
+    <div class="res-nick" id="resNick"></div>
+    <div class="res-slot" id="resSlot"></div>
+    <div class="res-lbl">VALOR GANHO</div>
+    <div class="res-input-wrap">
+      <span class="res-prefix">R$</span>
+      <input class="res-val-input" type="number" id="resVal" min="0" step="0.01" placeholder="0">
+    </div>
+    <div class="res-btns">
+      <button class="res-btn-r" onclick="resortear()">Resortear</button>
+      <button class="res-btn-s" onclick="salvarRes()">Salvar resultado</button>
+    </div>
+    <button class="res-btn-later" onclick="salvarResDepois()">Colocar depois</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ADMIN LOGIN -->
+<div id="al">
+  <div class="lcard">
+    <img class="brand-logo-lg" src="logo.png" alt="Hunter do Xand">
+    <div class="l-sub">Painel Administrativo</div>
+    <label>Usuário</label>
+    <input type="text" id="lu" placeholder="Seu usuário">
+    <label>Senha</label>
+    <input type="password" id="lp" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="l-btn" onclick="doLogin()">ENTRAR</button>
+    <div class="l-err" id="le">Usuário ou senha incorretos</div>
+    <button class="l-back" onclick="closeAdmin()">← Voltar ao site</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="ap">
+  <div class="ap-nav">
+    <img class="brand-logo" src="logo.png" alt="Hunter do Xand — Admin">
+    <button onclick="logoutAp()" style="background:none;border:1px solid var(--border2);color:var(--text2);padding:7px 14px;border-radius:6px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px">Sair</button>
+  </div>
+  <div class="ap-body">
+    <div class="ap-tools">
+      <button class="tool-btn" id="btnWheel" onclick="toggleWheel()">ROLETA: DESLIGADA</button>
+      <button class="tool-btn" id="btnFull" onclick="toggleFull()">TELA CHEIA</button>
+    </div>
+    <div class="ap-stage" id="apStage">
+      <div class="ap-card stage-wheel">
+      <div class="ap-title"><span class="ico-float" style="animation-delay:0.1s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></span> ROLETA DE CALLS</div>
+      <div class="wheel-wrap">
+        <canvas id="wc" width="600" height="600"></canvas>
+        <div class="w-ptr"></div>
+        <button class="spin-btn" id="spinBtn" onclick="spinWheel()">GIRAR</button>
+      </div>
+      <div class="spin-status">
+        <div class="spin-status-nick" id="wn">Gire para sortear</div>
+        <div class="spin-status-info" id="wi"></div>
+      </div>
+    </div>
+    <div class="ap-card stage-queue">
+      <div class="rtabs">
+        <button class="rtab active" id="tab-fila" onclick="switchTab('fila')"><span class="ico-float" style="animation-delay:0.2s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg></span> FILA DE CALLS</button>
+        <button class="rtab" id="tab-rank" onclick="switchTab('rank')"><span class="ico-float alt" style="animation-delay:0.4s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 4h8v4a4 4 0 0 1-8 0V4z"/><path d="M8 5H5a3 3 0 0 0 3 4"/><path d="M16 5h3a3 3 0 0 1-3 4"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/></svg></span> RANKING</button>
+      </div>
+      <div id="panel-fila">
+        <!-- ADICIONAR PARTICIPANTE MANUALMENTE (alternativa administrativa; a fonte principal é a Rhyno) -->
+        <div id="manualBox" style="background:var(--darker);border:1px solid var(--border2);border-radius:10px;padding:12px;margin-bottom:1rem">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:4px"><span class="ico-float" style="animation-delay:0s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span> ADICIONAR PARTICIPANTE MANUALMENTE</div>
+          <div style="font-size:11px;color:var(--text2);margin-bottom:10px;line-height:1.4">Os participantes da Rhyno chegam sozinhos nesta lista. Use este formulário só para casos avulsos.</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <input class="adm-in" type="text" id="adm-nick" placeholder="Nick da Twitch *" maxlength="40" autocomplete="off">
+            <input class="adm-in" type="text" id="adm-slot" list="slotList" placeholder="Jogo / slot *" maxlength="60" autocomplete="off">
+            <datalist id="slotList"></datalist>
+            <div style="display:flex;gap:8px">
+              <input class="adm-in" style="flex:1;min-width:0" type="password" id="adm-pix" placeholder="Chave Pix *" maxlength="140" autocomplete="off">
+              <button type="button" class="pix-eye pix-eye-lg" onclick="togglePixInput()" title="Mostrar/ocultar chave Pix" id="adm-pix-eye"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+            <input class="adm-in" type="number" id="adm-valor" min="0" step="0.01" placeholder="Valor (opcional — vazio usa o bônus global)">
+            <button onclick="admAddCall()"
+              style="padding:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#08131c;border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;cursor:pointer;transition:all 0.2s">
+              ADICIONAR À FILA
+            </button>
+          </div>
+        </div>
+        <div class="q-hdr">
+          <span class="ap-title" style="margin-bottom:0;font-size:14px">POR ORDEM DE CHEGADA</span>
+          <span class="q-cnt" id="qc">0 CALLS</span>
+        </div>
+        <div class="q-scroll" id="ql"></div>
+        <button class="clear-btn" onclick="clearQ()"><span class="ico-float alt" style="animation-delay:0.2s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></span> LIMPAR FILA</button>
+      </div>
+      <div id="panel-rank" style="display:none">
+        <div class="rank-stats">
+          <div class="stat-box"><div class="stat-val" id="st-tot">0</div><div class="stat-lbl">Calls pagas</div></div>
+          <div class="stat-box"><div class="stat-val" id="st-max">R$0</div><div class="stat-lbl">Maior pagou</div></div>
+          <div class="stat-box"><div class="stat-val" id="st-sum">R$0</div><div class="stat-lbl">Total pago</div></div>
+        </div>
+        <div class="rank-scroll" id="rankList"></div>
+        <button class="clear-rank-btn" onclick="clearRank()"><span class="ico-float" style="animation-delay:0.5s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></span> Limpar ranking</button>
+      </div>
+    </div>
+    </div>
+    <div class="ap-card ap-controls">
+      <div class="ctrl" style="margin-top:0">
+        <div class="ctrl-lbl">BÔNUS GLOBAL (R$1 – R$25)</div>
+        <div class="ctrl-row">
+          <input type="number" id="bonusIn" min="1" max="25" value="20">
+          <button class="ctrl-btn" onclick="setBonus()">DEFINIR</button>
+        </div>
+        <div class="rinha-btns">
+          <button class="r-open" onclick="setRinha(true)"><span class="ico-float" style="animation-delay:0s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span> ABRIR RINHA</button>
+          <button class="r-close" onclick="setRinha(false)"><span class="ico-float alt" style="animation-delay:0.3s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span> FECHAR RINHA</button>
+        </div>
+      </div>
+      <div class="ctrl" id="rhynoBox">
+        <div class="ctrl-lbl">FILA DA RHYNO</div>
+        <div class="ctrl-row">
+          <select class="adm-in" id="rhynoEvSel" onchange="setRhynoEvent()"><option value="">Escolha o evento…</option></select>
+          <button class="ctrl-btn" onclick="rhynoSyncNow()">ATUALIZAR</button>
+        </div>
+        <div class="rhyno-status" id="rhynoStatus">Aguardando a primeira consulta…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE + LÓGICA DO SITE -->
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.0/+esm';
+
+// ⚠️ SUBSTITUA PELOS DADOS DO SEU SUPABASE
+const SUPABASE_URL = 'https://sua-url.supabase.co'; // Copie de supabase.com > Project Settings > API
+const SUPABASE_KEY = 'sua-anon-key'; // Copie de supabase.com > Project Settings > API > anon key
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ─── FUNÇÕES SUPABASE ───
+async function readRinhaStatus() {
+  const { data } = await supabase.from('events').select('*').eq('status', 'open').single();
+  return data || { status: 'closed', ticket_value: 0 };
+}
+
+function watchRinhaStatus(callback) {
+  return supabase
+    .channel('events_changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'events' }, payload => callback(payload))
+    .subscribe();
+}
+
+function watchParticipants(eventId, callback) {
+  return supabase
+    .channel('participants_' + eventId)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'participants', filter: 'event_id=eq.' + eventId }, payload => callback(payload))
+    .subscribe();
+}
+
+function watchRankings(eventId, callback) {
+  return supabase
+    .channel('rankings_' + eventId)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'rankings', filter: 'event_id=eq.' + eventId }, payload => callback(payload))
+    .subscribe();
+}
+
+async function addParticipant(eventId, nick, slot, provider) {
+  const { data } = await supabase
+    .from('participants')
+    .insert([{ event_id: eventId, nick, slot, provider, status: 'pending' }])
+    .select();
+  return data?.[0];
+}
+
+async function getRankings(eventId) {
+  const { data } = await supabase
+    .from('rankings')
+    .select('*')
+    .eq('event_id', eventId)
+    .order('bonus_return', { ascending: false });
+  return data || [];
+}
+
+async function updateRanking(eventId, nick, bonusReturn) {
+  const { data } = await supabase
+    .from('rankings')
+    .upsert([{ event_id: eventId, nick, bonus_return: bonusReturn }])
+    .select();
+  return data?.[0];
+}
+
+async function openRinha(eventId, ticketValue) {
+  await supabase.from('events').update({ status: 'open', ticket_value: ticketValue }).eq('id', eventId);
+}
+
+async function closeRinha(eventId) {
+  await supabase.from('events').update({ status: 'closed' }).eq('id', eventId);
+}
+
+async function getOrCreateEvent() {
+  let { data: event } = await supabase.from('events').select('*').order('created_at', { ascending: false }).limit(1).single();
+  if (!event) {
+    const { data: newEvent } = await supabase
+      .from('events')
+      .insert([{ status: 'closed' }])
+      .select()
+      .single();
+    event = newEvent;
+  }
+  return event;
+}
+
+// ── LINK DA WINBET ──
+// TODO: troque pelo link real da Winbet. Usado no botão "IR PARA A WINBET"
+// na aba "Como Jogar".
+const WINBET_LINK = 'https://winebet.com/br?tag=d_6101469m_97143c_';
+document.getElementById('winbetBtn').href = WINBET_LINK;
+
+// ── LINK DA FILA DA RHYNO ──
+// TODO: cole aqui o link oficial da fila do Xand na Rhyno (usado no botão "IR PARA RHYNO").
+// Enquanto estiver vazio, o botão apenas avisa que o link ainda não foi configurado.
+const RHYNO_FILA_LINK = '';
+
+// ── SEGURANÇA: senha via SHA-256 — nunca texto puro ──
+const ADMIN_USER_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+const ADMIN_PASS_HASH = "5e9c477a49e5b242c8480d1e9ab6f4be1225bbb6b77d8dbd1fadbfc198c059b7";
+
+async function sha256(str){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// ── ESTADO GLOBAL ──
+let S = {
+  wAngle:0, spinning:false,
+  // estado do Firebase
+  rinhaOpen: false, bonus: 0,
+  queue: {}, rank: {},
+  // Só admin: chaves Pix (adminPrivate/pix) e quais estão reveladas na tela
+  pix: null, pixShown: {},
+  rhyno: {events:{}, eventId:null, status:null}
+};
+let _resItem=null, _toastTimer=null;
+
+// ── FIREBASE LISTENERS ──
+// PÚBLICOS (visitantes): apenas estado da rinha e ranking.
+// A fila de participantes e a chave Pix NÃO são lidas pelo site público —
+// só depois do login de admin (ver startAdminListeners).
+onValue(ref(db,'rinha/open'), snap => {
+  S.rinhaOpen = snap.val() === true;
+  updateStatus();
+});
+
+onValue(ref(db,'rinha/bonus'), snap => {
+  S.bonus = snap.val() || 0;
+});
+
+onValue(ref(db,'rank'), snap => {
+  S.rank = snap.val() || {};
+  if(document.getElementById('ap').classList.contains('open')) renderRank();
+  renderPublicRank();
+});
+
+// Oculta loading quando conectar
+onValue(ref(db,'rinha/open'), () => {
+  document.getElementById('fbLoad').classList.add('hide');
+}, {onlyOnce: true});
+
+// SOMENTE ADMIN: fila (Rhyno + manual) e chaves Pix
+let _adminListening=false;
+function startAdminListeners(){
+  if(_adminListening)return;
+  _adminListening=true;
+  onValue(ref(db,'queue'), snap => {
+    S.queue = snap.val() || {};
+    renderQ();
+    drawWheel(0);
+  });
+  onValue(ref(db,'adminPrivate/rhynoEvents'), snap => { S.rhyno.events = snap.val() || {}; renderRhyno(); });
+  onValue(ref(db,'adminPrivate/config/rhynoEventId'), snap => { S.rhyno.eventId = snap.val() || null; renderRhyno(); });
+  onValue(ref(db,'adminPrivate/rhynoStatus'), snap => { S.rhyno.status = snap.val() || null; renderRhyno(); });
+  // Consulta a Rhyno agora e a cada 15s enquanto o painel estiver aberto e um evento escolhido
+  rhynoSyncNow();
+  setInterval(()=>{
+    if(S.rhyno.eventId && !document.hidden && document.getElementById('ap').classList.contains('open')) rhynoSyncNow();
+  },15000);
+  onValue(ref(db,'adminPrivate/pix'), snap => {
+    S.pix = snap.val() || {};
+    renderQ();
+    renderRank();
+  });
+}
+
+
+// ── IMAGENS ──
+const IMG={
+  "Gates of Olympus":"https://assets.slotslaunch.com/5621/gates-of-olympus.jpg",
+  "Gates of Olympus 1000":"https://assets.slotslaunch.com/18440/gates-of-olympus-1000.jpg",
+  "Sweet Bonanza":"https://assets.slotslaunch.com/5706/sweet-bonanza.jpg",
+  "Sweet Bonanza 1000":"https://assets.slotslaunch.com/23735/sweet-bonanza-1000.jpg",
+  "Starlight Princess":"https://assets.slotslaunch.com/5701/starlight-princess.jpg",
+  "Starlight Princess 1000":"https://assets.slotslaunch.com/15454/starlight-princess-1000.jpg",
+  "Sugar Rush":"https://assets.slotslaunch.com/4674/sugar-rush.jpg",
+  "Sugar Rush 1000":"https://assets.slotslaunch.com/22039/sugar-rush-1000.jpg",
+  "Big Bass Bonanza":"https://assets.slotslaunch.com/5580/big-bass-bonanza.jpg",
+  "Big Bass Splash":"https://assets.slotslaunch.com/4656/big-bass-splash.jpg",
+  "Big Bass Halloween":"https://slotslaunch.nyc3.digitaloceanspaces.com/16932/big-bass-halloween.jpg",
+  "Big Bass Hold & Spinner":"https://assets.slotslaunch.com/5842/big-bass-hold-and-spinner.jpg",
+  "Big Bass Day at the Races":"https://assets.slotslaunch.com/5580/big-bass-bonanza.jpg",
+  "Big Bass Secrets of the Golden Lake":"https://assets.slotslaunch.com/5580/big-bass-bonanza.jpg",
+  "Wild West Gold":"https://assets.slotslaunch.com/5737/wild-west-gold.jpg",
+  "Wild West Gold Megaways":"https://assets.slotslaunch.com/5737/wild-west-gold.jpg",
+  "The Dog House":"https://assets.slotslaunch.com/5712/the-dog-house.jpg",
+  "The Dog House Megaways":"https://assets.slotslaunch.com/5712/the-dog-house.jpg",
+  "The Dog House Multihold":"https://assets.slotslaunch.com/5712/the-dog-house.jpg",
+  "Mustang Gold":"https://assets.slotslaunch.com/5587/buffalo-king.jpg",
+  "Fruit Party":"https://assets.slotslaunch.com/5618/fruit-party.jpg",
+  "Fruit Party 2":"https://assets.slotslaunch.com/5618/fruit-party.jpg",
+  "Floating Dragon":"https://assets.slotslaunch.com/5621/gates-of-olympus.jpg",
+  "Gems Bonanza":"https://assets.slotslaunch.com/5593/chilli-heat.jpg",
+  "Greedy Wolf":"https://slotslaunch.nyc3.digitaloceanspaces.com/302/greedy-wolf.jpg",
+  "Wolf Gold":"https://assets.slotslaunch.com/5587/buffalo-king.jpg",
+  "Spaceman":"https://slotslaunch.nyc3.digitaloceanspaces.com/27917/spaceman.jpg",
+  "Fishin' Reels":"https://assets.slotslaunch.com/13108/fishin-frenzy.jpg",
+  "John Hunter Scarab Queen":"https://slotslaunch.nyc3.digitaloceanspaces.com/5644/john-hunter-and-the-book-of-tut.jpg",
+  "John Hunter Mayan Gods":"https://slotslaunch.nyc3.digitaloceanspaces.com/5643/john-hunter-and-the-aztec-treasure.jpg",
+  "John Hunter Book of Tut":"https://slotslaunch.nyc3.digitaloceanspaces.com/5644/john-hunter-and-the-book-of-tut.jpg",
+  "Release the Kraken":"https://slotslaunch.nyc3.digitaloceanspaces.com/1801/release-the-kraken-2.jpg",
+  "Release the Kraken 2":"https://slotslaunch.nyc3.digitaloceanspaces.com/1801/release-the-kraken-2.jpg",
+  "Aztec Bonanza":"https://assets.slotslaunch.com/5593/chilli-heat.jpg",
+  "Buffalo King":"https://assets.slotslaunch.com/5587/buffalo-king.jpg",
+  "Buffalo King Megaways":"https://assets.slotslaunch.com/5587/buffalo-king.jpg",
+  "Pirate Gold":"https://slotslaunch.nyc3.digitaloceanspaces.com/5683/pirate-gold.jpg",
+  "Pirate Gold Deluxe":"https://slotslaunch.nyc3.digitaloceanspaces.com/5684/pirate-gold-deluxe.jpg",
+  "Hot to Burn":"https://slotslaunch.nyc3.digitaloceanspaces.com/26692/hot-to-burn-7-deadly-free-spins.jpg",
+  "Hot to Burn Extreme":"https://slotslaunch.nyc3.digitaloceanspaces.com/565/hot-to-burn-extreme.jpg",
+  "5 Lions Gold":"https://slotslaunch.nyc3.digitaloceanspaces.com/5565/5-lions-gold.jpg",
+  "5 Lions Megaways":"https://slotslaunch.nyc3.digitaloceanspaces.com/5565/5-lions-gold.jpg",
+  "Chilli Heat Megaways":"https://assets.slotslaunch.com/2621/chilli-heat-megaways.jpg",
+  "Curse of the Werewolf Megaways":"https://assets.slotslaunch.com/25825/werewolf.jpg",
+  "Ancient Egypt Classic":"https://assets.slotslaunch.com/5621/gates-of-olympus.jpg",
+  "Goblin Heist Powernudge":"https://slotslaunch.nyc3.digitaloceanspaces.com/4668/goblin-heist-powernudge.jpg",
+  "Book of Fallen":"https://assets.slotslaunch.com/9332/book-of-dead.jpg",
+  "Cash Bonanza":"https://assets.slotslaunch.com/5706/sweet-bonanza.jpg",
+  "Power of Thor Megaways":"https://assets.slotslaunch.com/2659/power-of-thor-megaways.jpg",
+  "Hammer of Olympus":"https://assets.slotslaunch.com/5621/gates-of-olympus.jpg",
+  "Wanted Dead or a Wild":"https://assets.slotslaunch.com/7373/wanted-dead-or-a-wild.jpg",
+  "Eye of Cleopatra":"https://slotslaunch.nyc3.digitaloceanspaces.com/4666/eye-of-cleopatra.jpg",
+  "3 Buzzing Wilds":"https://assets.slotslaunch.com/5706/sweet-bonanza.jpg",
+  "Extra Juicy Megaways":"https://assets.slotslaunch.com/23440/extra-chilli.jpg",
+  "Joker King":"https://slotslaunch.nyc3.digitaloceanspaces.com/5649/joker-king.jpg",
+  "Ultra Burn":"https://slotslaunch.nyc3.digitaloceanspaces.com/5726/ultra-burn.jpg",
+  "Panda's Fortune 2":"https://assets.slotslaunch.com/18197/fortune-mouse.jpg",
+  "Dragon Kingdom":"https://assets.slotslaunch.com/30734/fortune-dragon.jpg",
+  "777 Super Jackpot":"https://assets.slotslaunch.com/5593/chilli-heat.jpg",
+  "Pyramid King":"https://assets.slotslaunch.com/5621/gates-of-olympus.jpg",
+  "Voodoo Magic":"https://assets.slotslaunch.com/2097/cash-connection-voodoo-magic.jpg",
+  "El Dorado":"https://slotslaunch.nyc3.digitaloceanspaces.com/5643/john-hunter-and-the-aztec-treasure.jpg",
+  "Zeus vs Hades Gods of War":"https://assets.slotslaunch.com/11469/zeus-vs-hades-gods-of-war.jpg",
+  "Fortune Tiger":"https://assets.slotslaunch.com/10281/fortune-tiger.jpg",
+  "Fortune Mouse":"https://assets.slotslaunch.com/18197/fortune-mouse.jpg",
+  "Fortune Ox":"https://assets.slotslaunch.com/18198/fortune-ox.jpg",
+  "Fortune Rabbit":"https://assets.slotslaunch.com/18171/fortune-rabbit.jpg",
+  "Fortune Dragon":"https://assets.slotslaunch.com/30734/fortune-dragon.jpg",
+  "Fortune Snake":"https://assets.slotslaunch.com/31172/fortune-snake.jpg",
+  "Fortune Rooster":"https://assets.slotslaunch.com/18171/fortune-rabbit.jpg",
+  "Mahjong Ways":"https://assets.slotslaunch.com/18213/mahjong-ways.jpg",
+  "Mahjong Ways 2":"https://assets.slotslaunch.com/18213/mahjong-ways.jpg",
+  "Mahjong Wins":"https://slotslaunch.nyc3.digitaloceanspaces.com/16303/mahjong-wins.jpg",
+  "Mahjong Wins Bonus":"https://slotslaunch.nyc3.digitaloceanspaces.com/21965/mahjong-wins-bonus.jpg",
+  "Wild Bounty Showdown":"https://assets.slotslaunch.com/18239/wild-bounty-showdown.jpg",
+  "Ganesha Gold":"https://assets.slotslaunch.com/18201/ganesha-gold.jpg",
+  "Ganesha Fortune":"https://assets.slotslaunch.com/18201/ganesha-gold.jpg",
+  "Leprechaun Riches":"https://assets.slotslaunch.com/18212/lucky-neko.jpg",
+  "Candy Bonanza":"https://assets.slotslaunch.com/18185/candy-bonanza.jpg",
+  "Candy Burst":"https://assets.slotslaunch.com/18186/candy-burst.jpg",
+  "Treasures of Aztec":"https://assets.slotslaunch.com/18185/candy-bonanza.jpg",
+  "Medusa":"https://assets.slotslaunch.com/25124/medusa.jpg",
+  "Medusa II":"https://assets.slotslaunch.com/25124/medusa.jpg",
+  "Dragon Hatch":"https://assets.slotslaunch.com/30734/fortune-dragon.jpg",
+  "Dragon Legend":"https://assets.slotslaunch.com/30734/fortune-dragon.jpg",
+  "Dragon Tiger Luck":"https://assets.slotslaunch.com/10281/fortune-tiger.jpg",
+  "Asgardian Rising":"https://assets.slotslaunch.com/18179/asgardian-rising.jpg",
+  "Muay Thai Champion":"https://slotslaunch.nyc3.digitaloceanspaces.com/14813/muay-thai.jpg",
+  "Prosperity Fortune Tree":"https://assets.slotslaunch.com/18224/prosperity-fortune-tree.jpg",
+  "Lucky Neko":"https://assets.slotslaunch.com/18212/lucky-neko.jpg",
+  "Ninja vs Samurai":"https://assets.slotslaunch.com/18239/wild-bounty-showdown.jpg",
+  "Rooster Rumble":"https://assets.slotslaunch.com/18166/rooster-rumble.jpg",
+  "Songkran Splash":"https://slotslaunch.nyc3.digitaloceanspaces.com/15875/songkran.jpg",
+  "Werewolf's Hunt":"https://assets.slotslaunch.com/25825/werewolf.jpg",
+  "The Great Icescape":"https://assets.slotslaunch.com/18234/the-great-icescape.jpg",
+  "Jungle Delight":"https://assets.slotslaunch.com/18185/candy-bonanza.jpg",
+  "Bikini Paradise":"https://assets.slotslaunch.com/18182/bikini-paradise.jpg",
+  "Caishen Wins":"https://assets.slotslaunch.com/18185/candy-bonanza.jpg",
+  "Double Fortune":"https://assets.slotslaunch.com/18197/fortune-mouse.jpg",
+  "Circus Delight":"https://assets.slotslaunch.com/18185/candy-bonanza.jpg",
+  "Battleground Royale":"https://assets.slotslaunch.com/18165/battleground-royale.jpg",
+  "Captain's Bounty":"https://assets.slotslaunch.com/18179/asgardian-rising.jpg",
+  "Shaolin Soccer":"https://slotslaunch.nyc3.digitaloceanspaces.com/6349/shaolin-soccer.jpg",
+  "Speed Winner":"https://assets.slotslaunch.com/18196/emoji-riches.jpg",
+  "Emoji Riches":"https://assets.slotslaunch.com/18196/emoji-riches.jpg",
+  "Piggy Gold":"https://assets.slotslaunch.com/18223/piggy-gold.jpg",
+  "Yakuza Honor":"https://assets.slotslaunch.com/27438/yakuza-honor.jpg",
+  "Penalty Shootout":"https://slotslaunch.nyc3.digitaloceanspaces.com/18493/penalty-shoot-out-f12.jpg",
+  "Stick 'Em":"https://assets.slotslaunch.com/7373/wanted-dead-or-a-wild.jpg",
+  "Chaos Crew":"https://assets.slotslaunch.com/7373/wanted-dead-or-a-wild.jpg",
+  "Chaos Crew 2":"https://assets.slotslaunch.com/31896/cubes-2.jpg",
+  "Sketchy Slots":"https://assets.slotslaunch.com/7373/wanted-dead-or-a-wild.jpg",
+  "Highstreet Hustle":"https://assets.slotslaunch.com/7373/wanted-dead-or-a-wild.jpg",
+  "Cubes":"https://assets.slotslaunch.com/7373/wanted-dead-or-a-wild.jpg",
+  "Cubes 2":"https://assets.slotslaunch.com/31896/cubes-2.jpg",
+  "Fire in the Hole":"https://assets.slotslaunch.com/2074/fire-in-the-hole.jpg",
+  "Fire in the Hole 2":"https://assets.slotslaunch.com/20395/fire-in-the-hole-2.jpg",
+  "Tombstone":"https://assets.slotslaunch.com/2176/tombstone.jpg",
+  "Tombstone R.I.P.":"https://assets.slotslaunch.com/2177/tombstone-rip.jpg",
+  "Tombstone No Mercy":"https://assets.slotslaunch.com/2176/tombstone.jpg",
+  "San Quentin xWays":"https://assets.slotslaunch.com/2169/san-quentin.jpg",
+  "East Coast vs West Coast":"https://assets.slotslaunch.com/2071/east-coast-vs-west-coast.jpg",
+  "Mental":"https://assets.slotslaunch.com/2161/mental.jpg",
+  "Deadwood":"https://assets.slotslaunch.com/2068/deadwood.jpg",
+  "xBomb":"https://assets.slotslaunch.com/2074/fire-in-the-hole.jpg",
+  "Warrior Graveyard":"https://assets.slotslaunch.com/2180/warrior-graveyard.jpg",
+  "Bonanza Megaways":"https://assets.slotslaunch.com/23440/extra-chilli.jpg",
+  "Extra Chilli Megaways":"https://assets.slotslaunch.com/23440/extra-chilli.jpg",
+  "White Rabbit Megaways":"https://assets.slotslaunch.com/2727/white-rabbit-megaways.jpg",
+  "Donuts":"https://slotslaunch.nyc3.digitaloceanspaces.com/3367/donuts.jpg",
+  "Danger High Voltage":"https://slotslaunch.nyc3.digitaloceanspaces.com/23438/danger-high-voltage.jpg",
+  "Dead or Alive 2":"https://assets.slotslaunch.com/8947/dead-or-alive-2.jpg",
+  "Gonzo's Quest Megaways":"https://assets.slotslaunch.com/8924/gonzos-quest.jpg",
+  "Starburst":"https://assets.slotslaunch.com/8874/starburst.jpg",
+  "Jammin Jars":"https://assets.slotslaunch.com/18788/jammin-jars-2.jpg",
+  "Jammin Jars 2":"https://assets.slotslaunch.com/18788/jammin-jars-2.jpg",
+  "Book of Dead":"https://assets.slotslaunch.com/9332/book-of-dead.jpg",
+  "Legacy of Dead":"https://assets.slotslaunch.com/9419/legacy-of-dead.jpg",
+  "Reactoonz":"https://slotslaunch.nyc3.digitaloceanspaces.com/26318/reactoonz.jpg",
+  "Reactoonz 2":"https://slotslaunch.nyc3.digitaloceanspaces.com/26318/reactoonz.jpg",
+  "Fire Joker":"https://assets.slotslaunch.com/9367/fire-joker.jpg",
+  "Eye of Horus":"https://assets.slotslaunch.com/30343/eye-of-horus-tablets-of-destiny.jpg",
+  "Fishin Frenzy":"https://assets.slotslaunch.com/13108/fishin-frenzy.jpg",
+  "Aviator":"https://assets.slotslaunch.com/33813/aviator.jpg",
+  "Mines":"https://slotslaunch.nyc3.digitaloceanspaces.com/37170/mines.jpg",
+  "Crash":"https://assets.slotslaunch.com/33813/aviator.jpg",
+  "Plinko":"https://assets.slotslaunch.com/16735/plinko.jpg",
+};
+
+// ── SLOTS DATA ──
+const SLOTS={
+  "winebet":[
+    {name:"Gates of Olympus",prov:"Pragmatic Play",key:"pp"},
+    {name:"Gates of Olympus 1000",prov:"Pragmatic Play",key:"pp"},
+    {name:"Sweet Bonanza",prov:"Pragmatic Play",key:"pp"},
+    {name:"Sweet Bonanza 1000",prov:"Pragmatic Play",key:"pp"},
+    {name:"Starlight Princess",prov:"Pragmatic Play",key:"pp"},
+    {name:"Starlight Princess 1000",prov:"Pragmatic Play",key:"pp"},
+    {name:"Sugar Rush",prov:"Pragmatic Play",key:"pp"},
+    {name:"Sugar Rush 1000",prov:"Pragmatic Play",key:"pp"},
+    {name:"Big Bass Bonanza",prov:"Pragmatic Play",key:"pp"},
+    {name:"Big Bass Splash",prov:"Pragmatic Play",key:"pp"},
+    {name:"Big Bass Halloween",prov:"Pragmatic Play",key:"pp"},
+    {name:"Big Bass Day at the Races",prov:"Pragmatic Play",key:"pp"},
+    {name:"Big Bass Secrets of the Golden Lake",prov:"Pragmatic Play",key:"pp"},
+    {name:"Big Bass Hold & Spinner",prov:"Pragmatic Play",key:"pp"},
+    {name:"Wild West Gold",prov:"Pragmatic Play",key:"pp"},
+    {name:"Wild West Gold Megaways",prov:"Pragmatic Play",key:"pp"},
+    {name:"The Dog House",prov:"Pragmatic Play",key:"pp"},
+    {name:"The Dog House Megaways",prov:"Pragmatic Play",key:"pp"},
+    {name:"The Dog House Multihold",prov:"Pragmatic Play",key:"pp"},
+    {name:"Mustang Gold",prov:"Pragmatic Play",key:"pp"},
+    {name:"Fruit Party",prov:"Pragmatic Play",key:"pp"},
+    {name:"Fruit Party 2",prov:"Pragmatic Play",key:"pp"},
+    {name:"Greedy Wolf",prov:"Pragmatic Play",key:"pp"},
+    {name:"Floating Dragon",prov:"Pragmatic Play",key:"pp"},
+    {name:"Gems Bonanza",prov:"Pragmatic Play",key:"pp"},
+    {name:"Fishin' Reels",prov:"Pragmatic Play",key:"pp"},
+    {name:"Wolf Gold",prov:"Pragmatic Play",key:"pp"},
+    {name:"John Hunter Scarab Queen",prov:"Pragmatic Play",key:"pp"},
+    {name:"John Hunter Mayan Gods",prov:"Pragmatic Play",key:"pp"},
+    {name:"John Hunter Book of Tut",prov:"Pragmatic Play",key:"pp"},
+    {name:"Release the Kraken",prov:"Pragmatic Play",key:"pp"},
+    {name:"Release the Kraken 2",prov:"Pragmatic Play",key:"pp"},
+    {name:"Aztec Bonanza",prov:"Pragmatic Play",key:"pp"},
+    {name:"Buffalo King",prov:"Pragmatic Play",key:"pp"},
+    {name:"Buffalo King Megaways",prov:"Pragmatic Play",key:"pp"},
+    {name:"Pirate Gold",prov:"Pragmatic Play",key:"pp"},
+    {name:"Pirate Gold Deluxe",prov:"Pragmatic Play",key:"pp"},
+    {name:"Hot to Burn",prov:"Pragmatic Play",key:"pp"},
+    {name:"Hot to Burn Extreme",prov:"Pragmatic Play",key:"pp"},
+    {name:"5 Lions Gold",prov:"Pragmatic Play",key:"pp"},
+    {name:"5 Lions Megaways",prov:"Pragmatic Play",key:"pp"},
+    {name:"Chilli Heat Megaways",prov:"Pragmatic Play",key:"pp"},
+    {name:"Curse of the Werewolf Megaways",prov:"Pragmatic Play",key:"pp"},
+    {name:"Ancient Egypt Classic",prov:"Pragmatic Play",key:"pp"},
+    {name:"Spaceman",prov:"Pragmatic Play",key:"pp"},
+    {name:"Goblin Heist Powernudge",prov:"Pragmatic Play",key:"pp"},
+    {name:"Book of Fallen",prov:"Pragmatic Play",key:"pp"},
+    {name:"Cash Bonanza",prov:"Pragmatic Play",key:"pp"},
+    {name:"Power of Thor Megaways",prov:"Pragmatic Play",key:"pp"},
+    {name:"Hammer of Olympus",prov:"Pragmatic Play",key:"pp"},
+    {name:"Wanted Dead or a Wild",prov:"Pragmatic Play",key:"pp"},
+    {name:"Eye of Cleopatra",prov:"Pragmatic Play",key:"pp"},
+    {name:"3 Buzzing Wilds",prov:"Pragmatic Play",key:"pp"},
+    {name:"Extra Juicy Megaways",prov:"Pragmatic Play",key:"pp"},
+    {name:"Joker King",prov:"Pragmatic Play",key:"pp"},
+    {name:"Ultra Burn",prov:"Pragmatic Play",key:"pp"},
+    {name:"Panda's Fortune 2",prov:"Pragmatic Play",key:"pp"},
+    {name:"Dragon Kingdom",prov:"Pragmatic Play",key:"pp"},
+    {name:"777 Super Jackpot",prov:"Pragmatic Play",key:"pp"},
+    {name:"Pyramid King",prov:"Pragmatic Play",key:"pp"},
+    {name:"Voodoo Magic",prov:"Pragmatic Play",key:"pp"},
+    {name:"El Dorado",prov:"Pragmatic Play",key:"pp"},
+    {name:"Zeus vs Hades Gods of War",prov:"Pragmatic Play",key:"pp"},
+    {name:"Fortune Tiger",prov:"PG Soft",key:"pg"},
+    {name:"Fortune Mouse",prov:"PG Soft",key:"pg"},
+    {name:"Fortune Ox",prov:"PG Soft",key:"pg"},
+    {name:"Fortune Rabbit",prov:"PG Soft",key:"pg"},
+    {name:"Fortune Dragon",prov:"PG Soft",key:"pg"},
+    {name:"Fortune Snake",prov:"PG Soft",key:"pg"},
+    {name:"Fortune Rooster",prov:"PG Soft",key:"pg"},
+    {name:"Mahjong Ways",prov:"PG Soft",key:"pg"},
+    {name:"Mahjong Ways 2",prov:"PG Soft",key:"pg"},
+    {name:"Mahjong Wins",prov:"PG Soft",key:"pg"},
+    {name:"Mahjong Wins Bonus",prov:"PG Soft",key:"pg"},
+    {name:"Wild Bounty Showdown",prov:"PG Soft",key:"pg"},
+    {name:"Ganesha Gold",prov:"PG Soft",key:"pg"},
+    {name:"Ganesha Fortune",prov:"PG Soft",key:"pg"},
+    {name:"Leprechaun Riches",prov:"PG Soft",key:"pg"},
+    {name:"Candy Bonanza",prov:"PG Soft",key:"pg"},
+    {name:"Candy Burst",prov:"PG Soft",key:"pg"},
+    {name:"Treasures of Aztec",prov:"PG Soft",key:"pg"},
+    {name:"Medusa",prov:"PG Soft",key:"pg"},
+    {name:"Medusa II",prov:"PG Soft",key:"pg"},
+    {name:"Dragon Hatch",prov:"PG Soft",key:"pg"},
+    {name:"Dragon Legend",prov:"PG Soft",key:"pg"},
+    {name:"Dragon Tiger Luck",prov:"PG Soft",key:"pg"},
+    {name:"Asgardian Rising",prov:"PG Soft",key:"pg"},
+    {name:"Muay Thai Champion",prov:"PG Soft",key:"pg"},
+    {name:"Prosperity Fortune Tree",prov:"PG Soft",key:"pg"},
+    {name:"Lucky Neko",prov:"PG Soft",key:"pg"},
+    {name:"Ninja vs Samurai",prov:"PG Soft",key:"pg"},
+    {name:"Rooster Rumble",prov:"PG Soft",key:"pg"},
+    {name:"Songkran Splash",prov:"PG Soft",key:"pg"},
+    {name:"Werewolf's Hunt",prov:"PG Soft",key:"pg"},
+    {name:"The Great Icescape",prov:"PG Soft",key:"pg"},
+    {name:"Jungle Delight",prov:"PG Soft",key:"pg"},
+    {name:"Bikini Paradise",prov:"PG Soft",key:"pg"},
+    {name:"Caishen Wins",prov:"PG Soft",key:"pg"},
+    {name:"Double Fortune",prov:"PG Soft",key:"pg"},
+    {name:"Circus Delight",prov:"PG Soft",key:"pg"},
+    {name:"Battleground Royale",prov:"PG Soft",key:"pg"},
+    {name:"Captain's Bounty",prov:"PG Soft",key:"pg"},
+    {name:"Shaolin Soccer",prov:"PG Soft",key:"pg"},
+    {name:"Speed Winner",prov:"PG Soft",key:"pg"},
+    {name:"Emoji Riches",prov:"PG Soft",key:"pg"},
+    {name:"Piggy Gold",prov:"PG Soft",key:"pg"},
+    {name:"Yakuza Honor",prov:"PG Soft",key:"pg"},
+    {name:"Stick 'Em",prov:"Hacksaw Gaming",key:"hack"},
+    {name:"Chaos Crew",prov:"Hacksaw Gaming",key:"hack"},
+    {name:"Chaos Crew 2",prov:"Hacksaw Gaming",key:"hack"},
+    {name:"Sketchy Slots",prov:"Hacksaw Gaming",key:"hack"},
+    {name:"Highstreet Hustle",prov:"Hacksaw Gaming",key:"hack"},
+    {name:"Cubes",prov:"Hacksaw Gaming",key:"hack"},
+    {name:"Cubes 2",prov:"Hacksaw Gaming",key:"hack"},
+    {name:"Fire in the Hole",prov:"Nolimit City",key:"nolimit"},
+    {name:"Fire in the Hole 2",prov:"Nolimit City",key:"nolimit"},
+    {name:"Tombstone",prov:"Nolimit City",key:"nolimit"},
+    {name:"Tombstone R.I.P.",prov:"Nolimit City",key:"nolimit"},
+    {name:"Tombstone No Mercy",prov:"Nolimit City",key:"nolimit"},
+    {name:"San Quentin xWays",prov:"Nolimit City",key:"nolimit"},
+    {name:"East Coast vs West Coast",prov:"Nolimit City",key:"nolimit"},
+    {name:"Mental",prov:"Nolimit City",key:"nolimit"},
+    {name:"Deadwood",prov:"Nolimit City",key:"nolimit"},
+    {name:"xBomb",prov:"Nolimit City",key:"nolimit"},
+    {name:"Warrior Graveyard",prov:"Nolimit City",key:"nolimit"},
+    {name:"Bonanza Megaways",prov:"Big Time Gaming",key:"btg"},
+    {name:"Extra Chilli Megaways",prov:"Big Time Gaming",key:"btg"},
+    {name:"White Rabbit Megaways",prov:"Big Time Gaming",key:"btg"},
+    {name:"Donuts",prov:"Big Time Gaming",key:"btg"},
+    {name:"Danger High Voltage",prov:"Big Time Gaming",key:"btg"},
+    {name:"Dead or Alive 2",prov:"NetEnt",key:"outros"},
+    {name:"Gonzo's Quest Megaways",prov:"NetEnt",key:"outros"},
+    {name:"Starburst",prov:"NetEnt",key:"outros"},
+    {name:"Jammin Jars",prov:"Push Gaming",key:"outros"},
+    {name:"Jammin Jars 2",prov:"Push Gaming",key:"outros"},
+    {name:"Book of Dead",prov:"Play'n GO",key:"outros"},
+    {name:"Legacy of Dead",prov:"Play'n GO",key:"outros"},
+    {name:"Reactoonz",prov:"Play'n GO",key:"outros"},
+    {name:"Reactoonz 2",prov:"Play'n GO",key:"outros"},
+    {name:"Fire Joker",prov:"Play'n GO",key:"outros"},
+    {name:"Eye of Horus",prov:"Blueprint",key:"outros"},
+    {name:"Fishin Frenzy",prov:"Blueprint",key:"outros"},
+    {name:"Aviator",prov:"Spribe",key:"outros"},
+    {name:"Mines",prov:"Spribe",key:"outros"},
+    {name:"Plinko",prov:"BGaming",key:"outros"},
+  ],
+};
+
+const WCOLS=['#e63946','#e07c3a','#e8b84b','#2dc653','#1a9bfc','#9333ea','#e91e63','#00bcd4','#ff5722','#3498db','#c0392b','#16a085'];
+
+// ── ABAS DO SITE (Rhyno / Como Jogar / Ranking) ──
+function siteTab(tab){
+  ['rhyno','como','ranking'].forEach(t=>{
+    document.getElementById('view-'+t).classList.toggle('active',tab===t);
+    document.getElementById('stab-'+t).classList.toggle('active',tab===t);
+  });
+  if(tab==='ranking')renderPublicRank();
+  window.scrollTo(0,0);
+}
+window.siteTab=siteTab;
+
+// ── BOTÃO "IR PARA RHYNO" ──
+// TODO: coloque em RHYNO_FILA_LINK (lá em cima) o link oficial da fila do Xand na Rhyno.
+function initRhynoBtn(){
+  const btn=document.getElementById('rhynoBtn');
+  if(RHYNO_FILA_LINK){btn.href=RHYNO_FILA_LINK;return;}
+  btn.addEventListener('click',e=>{
+    e.preventDefault();
+    showToast('Link da fila da Rhyno ainda não configurado.','info');
+  });
+}
+
+// ── UI HELPERS ──
+function updateStatus(){
+  const dot=document.getElementById('statusDot');
+  const txt=document.getElementById('statusTxt');
+  dot.className='status-dot '+(S.rinhaOpen?'open':'closed');
+  txt.textContent=S.rinhaOpen?'Rinha aberta':'Rinha fechada';
+}
+
+// ── TOAST ──
+function showToast(msg,type){
+  if(_toastTimer)clearTimeout(_toastTimer);
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+type+' show';
+  _toastTimer=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ── ADMIN LOGIN com SHA-256 ──
+function openAdmin(){document.getElementById('al').classList.add('open');document.getElementById('le').style.display='none';}
+function closeAdmin(){document.getElementById('al').classList.remove('open');}
+function logoutAp(){document.getElementById('ap').classList.remove('open');S.pixShown={};if(document.fullscreenElement)document.exitFullscreen();setFull(false);}
+async function doLogin(){
+  const u=document.getElementById('lu').value.trim();
+  const p=document.getElementById('lp').value;
+  const uHash=await sha256(u);
+  const pHash=await sha256(p);
+  if(uHash===ADMIN_USER_HASH&&pHash===ADMIN_PASS_HASH){
+    document.getElementById('al').classList.remove('open');
+    document.getElementById('ap').classList.add('open');
+    admLoadSlots();
+    startAdminListeners();
+    renderQ();renderRank();drawWheel(0);
+  } else document.getElementById('le').style.display='block';
+}
+
+// ── ADMIN: BÔNUS e RINHA — salva no Firebase ──
+async function setBonus(){
+  const v=parseInt(document.getElementById('bonusIn').value);
+  if(!v||v<1||v>25){showToast('Bônus entre R$1 e R$25','err');return;}
+  await set(ref(db,'rinha/bonus'),v);
+  showToast('Bônus definido: R$ '+v,'ok');
+}
+async function setRinha(o){
+  await update(ref(db,'rinha'),{open:o});
+  if(o){
+    // Reseta nicks ao abrir nova rinha
+    await set(ref(db,'nicksSent'),null);
+    showToast('<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg> Rinha ABERTA! Nicks resetados.','ok');
+  } else {
+    showToast('<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Rinha FECHADA!','err');
+  }
+}
+
+// ── ADMIN: ADICIONAR PARTICIPANTE MANUAL (origem = MANUAL) ──
+// Obrigatórios: nick da Twitch, jogo/slot e chave Pix. Valor é opcional.
+// Dados públicos vão em queue/{id}; a chave Pix vai SEPARADA em adminPrivate/pix/{id}.
+function admLoadSlots(){
+  const names=[...new Set((SLOTS.winebet||[]).map(s=>s.name))];
+  document.getElementById('slotList').innerHTML=names.map(n=>`<option value="${esc(n)}"></option>`).join('');
+}
+function togglePixInput(){
+  const i=document.getElementById('adm-pix');
+  const show=i.type==='password';
+  i.type=show?'text':'password';
+  document.getElementById('adm-pix-eye').innerHTML=show?EYE_OFF:EYE;
+}
+
+async function admAddCall(){
+  const nick=document.getElementById('adm-nick').value.trim();
+  const slotName=document.getElementById('adm-slot').value.trim();
+  const pix=document.getElementById('adm-pix').value.trim();
+  const valorRaw=document.getElementById('adm-valor').value.trim();
+  if(!nick){showToast('Informe o nick da Twitch!','err');return;}
+  if(!slotName){showToast('Informe o jogo/slot!','err');return;}
+  if(!pix){showToast('Informe a chave Pix!','err');return;}
+  let valor=null;
+  if(valorRaw!==''){
+    valor=parseFloat(valorRaw.replace(',','.'));
+    if(isNaN(valor)||valor<0){showToast('Valor inválido!','err');return;}
+  }
+  const known=(SLOTS.winebet||[]).find(s=>s.name.toLowerCase()===slotName.toLowerCase());
+  const now=Date.now();
+  const entry={
+    nick,
+    slot:known?known.name:slotName,
+    prov:known?known.prov:'Manual',
+    source:'MANUAL',
+    externalId:null,
+    valor,
+    bonus:valor!=null?valor:S.bonus,
+    platform:'manual',
+    participatedAt:now,
+    time:new Date().toLocaleTimeString('pt-BR'),
+    ts:now,addedByAdmin:true
+  };
+  const key=push(ref(db,'queue')).key;
+  // Uma gravação só: participante (fila) + Pix (área privada)
+  await update(ref(db),{['queue/'+key]:entry,['adminPrivate/pix/'+key]:pix});
+  const nickKey=nick.toLowerCase().replace(/[^a-z0-9]/g,'_');
+  await set(ref(db,'nicksSent/'+nickKey),true);
+  ['adm-nick','adm-slot','adm-pix','adm-valor'].forEach(id=>document.getElementById(id).value='');
+  const pi=document.getElementById('adm-pix');pi.type='password';
+  document.getElementById('adm-pix-eye').innerHTML=EYE;
+  showToast(nick+' adicionado à fila!','ok');
+}
+window.admAddCall=admAddCall;window.togglePixInput=togglePixInput;
+
+
+// ── ADMIN: PALCO (fila por ordem de chegada é o principal; roleta é opcional) ──
+function setWheel(on){
+  const st=document.getElementById('apStage');
+  st.classList.toggle('wheel-on',on);
+  document.body.classList.toggle('wheel-off',!on);
+  const b=document.getElementById('btnWheel');
+  b.classList.toggle('on',on);
+  b.textContent='ROLETA: '+(on?'LIGADA':'DESLIGADA');
+  try{localStorage.setItem('hxWheel',on?'1':'0');}catch(e){}
+  if(on)drawWheel(-S.wAngle);
+}
+function toggleWheel(){setWheel(!document.getElementById('apStage').classList.contains('wheel-on'));}
+function setFull(on){
+  document.body.classList.toggle('is-full',on);
+  const b=document.getElementById('btnFull');
+  b.classList.toggle('on',on);
+  b.textContent=on?'SAIR DA TELA CHEIA':'TELA CHEIA';
+}
+async function toggleFull(){
+  const on=!document.body.classList.contains('is-full');
+  if(on)S.pixShown={};
+  setFull(on);
+  try{
+    if(on&&!document.fullscreenElement&&document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();
+    if(!on&&document.fullscreenElement)await document.exitFullscreen();
+  }catch(e){/* sem API de tela cheia (ex.: iPhone): fica só o modo limpo */}
+}
+// Se o usuário sair com ESC, volta o botão ao normal
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)setFull(false);});
+// Lançar resultado direto de um item da fila (sem precisar girar a roleta)
+function resultQ(key){
+  const it=(S.queue||{})[key];
+  if(it)openRes({...it,_key:key});
+}
+
+// ── RHYNO: evento, estado e atualização (a consulta em si roda no servidor) ──
+function renderRhyno(){
+  const sel=document.getElementById('rhynoEvSel');if(!sel)return;
+  const evs=Object.values(S.rhyno.events||{});
+  sel.innerHTML='<option value="">Escolha o evento…</option>'+evs.map(e=>
+    `<option value="${esc(e.id)}"${e.id===S.rhyno.eventId?' selected':''}>${esc(e.name)}${e.occupied!=null?' ('+e.occupied+')':''}</option>`).join('');
+  const st=S.rhyno.status,el=document.getElementById('rhynoStatus');
+  if(!st){el.className='rhyno-status';el.textContent='Aguardando a primeira consulta…';return;}
+  const hora=new Date(st.at).toLocaleTimeString('pt-BR');
+  if(!st.ok){el.className='rhyno-status err';el.innerHTML='<b>✖ Erro:</b> '+esc(st.message||'falha ao consultar a Rhyno')+' <i>('+hora+')</i>';return;}
+  if(st.message){el.className='rhyno-status';el.textContent=st.message;return;}
+  let extra='';
+  if(st.pixMissing)extra+=' · <b style="color:var(--red)">'+st.pixMissing+' sem Pix</b>';
+  if(st.slotMissing)extra+=' · '+st.slotMissing+' sem jogo';
+  el.className='rhyno-status ok';
+  el.innerHTML='<b>✔ Conectado</b> · '+esc(st.eventName||'')+' · '+(st.entries||0)+' na fila da Rhyno'+extra+' <i>('+hora+')</i>';
+}
+async function rhynoSyncNow(){
+  try{await set(ref(db,'adminPrivate/rhynoSyncRequest'),Date.now());}catch(e){console.error(e);}
+}
+async function setRhynoEvent(){
+  const v=document.getElementById('rhynoEvSel').value;
+  await set(ref(db,'adminPrivate/config/rhynoEventId'),v||null);
+  if(v)rhynoSyncNow();
+}
+
+// ── TABS ──
+function switchTab(tab){
+  document.getElementById('panel-fila').style.display=tab==='fila'?'block':'none';
+  document.getElementById('panel-rank').style.display=tab==='rank'?'block':'none';
+  document.getElementById('tab-fila').classList.toggle('active',tab==='fila');
+  document.getElementById('tab-rank').classList.toggle('active',tab==='rank');
+  if(tab==='rank')renderRank();
+}
+
+// ── PIX (somente admin) ──
+const EYE=`<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const EYE_OFF=`<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18"/><path d="M10.6 6.1A10.4 10.4 0 0 1 12 6c6.4 0 10 6 10 6a17 17 0 0 1-3.2 3.9"/><path d="M6.6 6.7A17 17 0 0 0 2 12s3.6 6 10 6a10 10 0 0 0 4.2-.9"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>`;
+const PIX_MASK='••••••••••••••';
+// Linha "PIX: •••• 👁" — oculta por padrão; se não houver Pix, permite informar.
+function pixRow(key){
+  if(S.pix===null)return '';
+  const p=S.pix[key];
+  if(!p){
+    return `<div class="pix-row pix-missing"><span>SEM PIX:</span>
+      <input type="text" id="pixin-${key}" placeholder="Informar chave Pix" maxlength="140" autocomplete="off" onkeydown="if(event.key==='Enter')savePix('${key}')">
+      <button onclick="savePix('${key}')">Salvar</button></div>`;
+  }
+  const shown=!!S.pixShown[key];
+  return `<div class="pix-row"><span>PIX:</span><span class="pix-val">${shown?esc(p):PIX_MASK}</span>
+    <button class="pix-eye" onclick="togglePix('${key}')" title="${shown?'Ocultar':'Mostrar'} chave Pix">${shown?EYE_OFF:EYE}</button></div>`;
+}
+function togglePix(key){
+  S.pixShown[key]=!S.pixShown[key];
+  renderQ();renderRank();
+}
+async function savePix(key){
+  const el=document.getElementById('pixin-'+key);
+  const v=el?el.value.trim():'';
+  if(!v){showToast('Informe a chave Pix!','err');return;}
+  await set(ref(db,'adminPrivate/pix/'+key),v);
+  showToast('Chave Pix salva!','ok');
+}
+// Remove Pix que não pertence mais a ninguém (fora da fila e sem lançamento no ranking)
+async function pruneOrphanPix(keepKeys){
+  try{
+    const keep=new Set(keepKeys);
+    const snap=await get(ref(db,'adminPrivate/pix'));
+    const all=snap.val()||{};const upd={};
+    Object.keys(all).forEach(k=>{if(!keep.has(k))upd['adminPrivate/pix/'+k]=null;});
+    if(Object.keys(upd).length)await update(ref(db),upd);
+  }catch(e){console.error('pruneOrphanPix',e);}
+}
+function origem(it){return esc(it.source||it.platform||'');}
+
+// ── QUEUE (Rhyno + manual na MESMA lista/roleta) ──
+async function clearQ(){
+  if(!confirm('Limpar toda a fila?'))return;
+  await set(ref(db,'queue'),null);
+  // mantém só o Pix de quem já foi lançado no ranking (precisa pagar)
+  await pruneOrphanPix(Object.values(S.rank||{}).map(r=>r.pid).filter(Boolean));
+  document.getElementById('wn').textContent='Gire para sortear';document.getElementById('wi').textContent='';
+  showToast('Fila limpa!','info');
+}
+async function removeQItem(key){
+  await update(ref(db),{['queue/'+key]:null,['adminPrivate/pix/'+key]:null});
+}
+function renderQ(){
+  const q=S.queue||{};
+  const items=Object.entries(q).sort((a,b)=>(a[1].ts||0)-(b[1].ts||0));
+  document.getElementById('qc').textContent=items.length+' CALL'+(items.length!==1?'S':'');
+  const l=document.getElementById('ql');
+  if(!items.length){l.innerHTML='<div class="q-empty">Nenhum participante na fila ainda</div>';return;}
+  l.innerHTML=items.map(([key,it],i)=>{
+    const img=IMG[it.slot]||'';
+    const thumb=img?`<img class="qi-thumb" src="${img}" alt="${esc(it.slot)}">`
+                   :`<div class="qi-thumb" style="display:flex;align-items:center;justify-content:center;font-size:16px"><span class="ico-float" style="animation-delay:0s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></span></div>`;
+    const src=it.source||(it.addedByAdmin?'MANUAL':'');
+    const srcBadge=(src?`<span class="qi-plat qi-src${src==='MANUAL'?' manual':''}">${esc(src)}</span>`:'')+(it.quantity>1?`<span class="qi-plat qi-src">×${it.quantity}</span>`:'');
+    const val=it.valor!=null?it.valor:(it.bonus||'?');
+    return `<div class="qi${i===0?' first':''}">
+      <div class="qi-num">${i+1}</div>
+      ${thumb}
+      <div class="qi-b">
+        <div class="qi-nick">${esc(it.nick)}${i===0?'<span class="qi-next">PRÓXIMO</span>':''}</div>
+        <div class="qi-det">${esc(it.slot)}${srcBadge}</div>
+        ${pixRow(key)}
+      </div>
+      <div class="qi-bonus">R$${esc(val)}</div>
+      <button class="qi-go" onclick="resultQ('${key}')" title="Lançar resultado">✓</button>
+      <button class="qi-del" onclick="removeQItem('${key}')" title="Remover"><span class="ico-float" style="animation-delay:0s">✕</span></button>
+    </div>`;
+  }).join('');
+}
+
+// ── RESULTADO MODAL ──
+function openRes(item){
+  _resItem=item;
+  document.getElementById('resNick').textContent=item.nick;
+  document.getElementById('resSlot').textContent=item.slot+' · '+(item.source||item.platform||'');
+  document.getElementById('resVal').value='';
+  document.getElementById('resMod').classList.add('open');
+  setTimeout(()=>document.getElementById('resVal').focus(),150);
+}
+function closeRes(){document.getElementById('resMod').classList.remove('open');_resItem=null;}
+document.getElementById('resVal').addEventListener('keydown',e=>{if(e.key==='Enter')salvarRes();});
+function resortear(){closeRes();setTimeout(()=>spinWheel(),300);}
+async function salvarRes(){
+  if(!_resItem)return;
+  const val=parseFloat(document.getElementById('resVal').value.replace(',','.'));
+  if(isNaN(val)||val<0){showToast('Informe o valor ganho!','err');return;}
+  // Salva no ranking do Firebase
+  const rankEntry={
+    nick:_resItem.nick,slot:_resItem.slot,prov:_resItem.prov,
+    platform:_resItem.platform||String(_resItem.source||'').toLowerCase(),source:_resItem.source||null,pid:_resItem._key||null,bonus:(_resItem.valor!=null?_resItem.valor:_resItem.bonus),paid:val,pending:false,
+    time:_resItem.time,paidAt:new Date().toLocaleTimeString('pt-BR'),
+    paidDate:new Date().toLocaleDateString('pt-BR'),ts:Date.now()
+  };
+  await push(ref(db,'rank'),rankEntry);
+  // Remove da fila
+  if(_resItem._key) await remove(ref(db,'queue/'+_resItem._key));
+  const nick=_resItem.nick;
+  closeRes();
+  document.getElementById('wn').textContent='Gire para sortear';document.getElementById('wi').textContent='';
+  showToast('<span class="ico-float alt" style="animation-delay:0.2s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 4h8v4a4 4 0 0 1-8 0V4z"/><path d="M8 5H5a3 3 0 0 0 3 4"/><path d="M16 5h3a3 3 0 0 1-3 4"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/></svg></span> '+nick+' · R$'+val.toFixed(2)+' no ranking!','ok');
+  switchTab('rank');
+}
+// Manda pro ranking sem o valor ainda — fica marcado como "aguardando valor"
+// pra ser preenchido depois, direto na lista do ranking.
+async function salvarResDepois(){
+  if(!_resItem)return;
+  const rankEntry={
+    nick:_resItem.nick,slot:_resItem.slot,prov:_resItem.prov,
+    platform:_resItem.platform||String(_resItem.source||'').toLowerCase(),source:_resItem.source||null,pid:_resItem._key||null,bonus:(_resItem.valor!=null?_resItem.valor:_resItem.bonus),paid:null,pending:true,
+    time:_resItem.time,paidAt:null,paidDate:null,ts:Date.now()
+  };
+  await push(ref(db,'rank'),rankEntry);
+  if(_resItem._key) await remove(ref(db,'queue/'+_resItem._key));
+  const nick=_resItem.nick;
+  closeRes();
+  document.getElementById('wn').textContent='Gire para sortear';document.getElementById('wi').textContent='';
+  showToast(nick+' adicionado ao ranking — valor pendente','info');
+  switchTab('rank');
+}
+// Preenche o valor de uma entrada pendente direto na lista do ranking
+async function savePendingValue(key){
+  const input=document.getElementById('pv-'+key);
+  if(!input)return;
+  const val=parseFloat(input.value.replace(',','.'));
+  if(isNaN(val)||val<0){showToast('Informe o valor ganho!','err');return;}
+  await update(ref(db,'rank/'+key),{
+    paid:val,pending:false,
+    paidAt:new Date().toLocaleTimeString('pt-BR'),
+    paidDate:new Date().toLocaleDateString('pt-BR')
+  });
+  showToast('Valor salvo no ranking!','ok');
+}
+
+// ── RANKING ──
+function renderRank(){
+  const rank=S.rank||{};
+  const items=Object.entries(rank).map(([k,v])=>({...v,_key:k}))
+    .sort((a,b)=>(b.paid||0)-(a.paid||0));
+  const tot=items.length;
+  const paidItems=items.filter(r=>!r.pending&&r.paid!=null);
+  const max=paidItems.length?Math.max(...paidItems.map(r=>r.paid)):0;
+  const sum=paidItems.reduce((s,r)=>s+(r.paid||0),0);
+  document.getElementById('st-tot').textContent=tot;
+  document.getElementById('st-max').textContent='R$'+max.toFixed(0);
+  document.getElementById('st-sum').textContent='R$'+sum.toFixed(0);
+  const l=document.getElementById('rankList');
+  if(!items.length){l.innerHTML='<div class="rank-empty">Nenhuma call lançada ainda</div>';return;}
+  const pc=(i)=>i===0?'gold':i===1?'silver':i===2?'bronze':'normal';
+  const pi=(i)=>String(i+1);
+  l.innerHTML=items.map((it,i)=>{
+    const img=IMG[it.slot]||'';
+    const thumb=img?`<img class="ri-thumb" src="${img}" alt="${it.slot}">`
+                   :`<div class="ri-thumb" style="display:flex;align-items:center;justify-content:center;font-size:18px"><span class="ico-float" style="animation-delay:0s"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></span></div>`;
+    const mult=it.bonus&&it.paid?(it.paid/it.bonus).toFixed(1)+'x':'—';
+    const rightSide=it.pending
+      ? `<div class="ri-pending-form">
+           <input type="number" id="pv-${it._key}" min="0" step="0.01" placeholder="R$0" onkeydown="if(event.key==='Enter')savePendingValue('${it._key}')">
+           <button onclick="savePendingValue('${it._key}')">Salvar</button>
+         </div>`
+      : `<div style="text-align:right;flex-shrink:0">
+           <div class="ri-val">R$${parseFloat(it.paid).toFixed(2)}</div>
+           <div class="ri-mult">${mult}</div>
+         </div>`;
+    return `<div class="ri">
+      <div class="ri-pos ${pc(i)}">${pi(i)}</div>
+      ${thumb}
+      <div class="ri-b">
+        <div class="ri-nick">${esc(it.nick)} <span class="ri-badge${it.pending?' pending':''}">${it.pending?'AGUARDANDO VALOR':'PAGOU'}</span></div>
+        <div class="ri-det">${esc(it.slot)} · ${origem(it)} · bônus R$${it.bonus||'?'} · ${it.paidDate||''} ${it.paidAt||''}</div>
+        ${it.pid?pixRow(it.pid):''}
+      </div>
+      ${rightSide}
+    </div>`;
+  }).join('');
+}
+
+// ── RANKING PÚBLICO (sem login, só leitura) ──
+function renderPublicRank(){
+  const listEl=document.getElementById('pubRankList');
+  if(!listEl)return; // ainda não montou o DOM
+  const rank=S.rank||{};
+  const items=Object.values(rank).sort((a,b)=>(b.paid||0)-(a.paid||0));
+  const tot=items.length;
+  const paidItems=items.filter(r=>!r.pending&&r.paid!=null);
+  const max=paidItems.length?Math.max(...paidItems.map(r=>r.paid)):0;
+  const sum=paidItems.reduce((s,r)=>s+(r.paid||0),0);
+  document.getElementById('pub-st-tot').textContent=tot;
+  document.getElementById('pub-st-max').textContent='R$'+max.toFixed(0);
+  document.getElementById('pub-st-sum').textContent='R$'+sum.toFixed(0);
+  if(!items.length){listEl.innerHTML='<div class="rank-empty">Nenhuma call lançada ainda</div>';return;}
+  const pc=(i)=>i===0?'gold':i===1?'silver':i===2?'bronze':'normal';
+  listEl.innerHTML=items.map((it,i)=>{
+    const img=IMG[it.slot]||'';
+    const thumb=img?`<img class="ri-thumb" src="${img}" alt="${it.slot}">`
+                   :`<div class="ri-thumb" style="display:flex;align-items:center;justify-content:center;font-size:18px"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></div>`;
+    const mult=it.bonus&&it.paid?(it.paid/it.bonus).toFixed(1)+'x':'—';
+    const rightSide=it.pending
+      ?`<div class="ri-mult">aguardando valor</div>`
+      :`<div style="text-align:right;flex-shrink:0"><div class="ri-val">R$${parseFloat(it.paid).toFixed(2)}</div><div class="ri-mult">${mult}</div></div>`;
+    return `<div class="ri">
+      <div class="ri-pos ${pc(i)}">${i+1}</div>
+      ${thumb}
+      <div class="ri-b">
+        <div class="ri-nick">${esc(it.nick)} <span class="ri-badge${it.pending?' pending':''}">${it.pending?'AGUARDANDO VALOR':'PAGOU'}</span></div>
+        <div class="ri-det">${esc(it.slot)} · ${origem(it)} · bônus R$${it.bonus||'?'}</div>
+      </div>
+      ${rightSide}
+    </div>`;
+  }).join('');
+}
+async function clearRank(){
+  if(!confirm('Limpar todo o ranking?'))return;
+  await set(ref(db,'rank'),null);
+  await pruneOrphanPix(Object.keys(S.queue||{}));
+  showToast('Ranking limpo!','err');
+}
+
+// ── WHEEL ──
+function drawWheel(ang){
+  const cv=document.getElementById('wc');if(!cv)return;
+  const ctx=cv.getContext('2d'),W=300,cx=150,cy=150,r=146;
+  ctx.setTransform(2,0,0,2,0,0);
+  ctx.clearRect(0,0,W,W);
+  const q=S.queue||{};
+  const items=Object.entries(q).sort((a,b)=>(a[1].ts||0)-(b[1].ts||0));
+  if(!items.length){
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='#0d1a30';ctx.fill();
+    ctx.strokeStyle='#2a3f5f';ctx.lineWidth=3;ctx.stroke();
+    ctx.fillStyle='#4a6480';ctx.font='bold 13px Rajdhani,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('Sem calls na fila',cx,cy);return;
+  }
+  const n=items.length,arc=2*Math.PI/n;
+  items.forEach(([,it],i)=>{
+    const s=ang+i*arc,e=s+arc;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);ctx.closePath();
+    ctx.fillStyle=WCOLS[i%WCOLS.length];ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.4)';ctx.lineWidth=2;ctx.stroke();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(s+arc/2);ctx.textAlign='right';
+    ctx.fillStyle='rgba(255,255,255,0.95)';
+    const fs=n>12?9:n>8?11:13;ctx.font=`bold ${fs}px Rajdhani,sans-serif`;
+    const lbl=it.nick.length>13?it.nick.slice(0,13)+'…':it.nick;
+    ctx.fillText(lbl,r-8,4);ctx.restore();
+  });
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='rgba(111,216,255,0.6)';ctx.lineWidth=4;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,25,0,Math.PI*2);ctx.fillStyle='#0e1525';ctx.fill();
+  ctx.strokeStyle='rgba(111,216,255,0.8)';ctx.lineWidth=3;ctx.stroke();
+}
+
+function spinWheel(){
+  if(S.spinning)return;
+  const q=S.queue||{};
+  const items=Object.entries(q).sort((a,b)=>(a[1].ts||0)-(b[1].ts||0));
+  if(!items.length){showToast('Fila vazia!','err');return;}
+  S.spinning=true;document.getElementById('spinBtn').disabled=true;
+  document.getElementById('wn').textContent='Sorteando…';document.getElementById('wi').textContent='';
+  const total=(8+Math.random()*6)*2*Math.PI,dur=5500;
+  const t0=performance.now(),a0=S.wAngle,a1=a0+total;
+  const ease=(t)=>1-Math.pow(1-t,4);
+  function frame(now){
+    const t=Math.min((now-t0)/dur,1),a=a0+ease(t)*(a1-a0);
+    S.wAngle=a;drawWheel(-a);
+    if(t<1){requestAnimationFrame(frame);return;}
+    S.spinning=false;document.getElementById('spinBtn').disabled=false;
+    const n=items.length,arc=2*Math.PI/n;
+    const fa=((S.wAngle)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
+    const idx=Math.floor(fa/arc)%n;
+    const [key,winner]=items[idx];
+    document.getElementById('wn').innerHTML='<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 4h8v4a4 4 0 0 1-8 0V4z"/><path d="M8 5H5a3 3 0 0 0 3 4"/><path d="M16 5h3a3 3 0 0 1-3 4"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/></svg> '+esc(winner.nick);
+    document.getElementById('wi').textContent=winner.slot+' · '+(winner.source||winner.platform||'');
+    setTimeout(()=>openRes({...winner,_key:key}),600);
+  }
+  requestAnimationFrame(frame);
+}
+
+// ── HELPERS ──
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// Expõe funções para o HTML inline
+window.openAdmin=openAdmin;window.closeAdmin=closeAdmin;
+window.logoutAp=logoutAp;window.doLogin=doLogin;window.setBonus=setBonus;
+window.setRinha=setRinha;window.switchTab=switchTab;window.clearQ=clearQ;
+window.removeQItem=removeQItem;window.clearRank=clearRank;window.spinWheel=spinWheel;
+window.closeRes=closeRes;window.resortear=resortear;window.salvarRes=salvarRes;
+window.salvarResDepois=salvarResDepois;window.savePendingValue=savePendingValue;
+window.togglePix=togglePix;window.savePix=savePix;
+window.rhynoSyncNow=rhynoSyncNow;window.setRhynoEvent=setRhynoEvent;window.toggleWheel=toggleWheel;window.toggleFull=toggleFull;window.resultQ=resultQ;
+window.admLoadSlots=admLoadSlots;window.admAddCall=admAddCall;window.togglePixInput=togglePixInput;
+
+// ── INIT ──
+initRhynoBtn();
+let _w=false;try{_w=localStorage.getItem('hxWheel')==='1';}catch(e){}
+setWheel(_w);
+
+</script>
+</body>
+</html>
