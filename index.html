@@ -840,8 +840,8 @@ body.is-full .pix-row{display:none} /* nunca mostra Pix na tela cheia (live) */
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.0/+esm';
 
 // ⚠️ SUBSTITUA PELOS DADOS DO SEU SUPABASE
-const SUPABASE_URL = 'https://sua-url.supabase.co'; // Copie de supabase.com > Project Settings > API
-const SUPABASE_KEY = 'sua-anon-key'; // Copie de supabase.com > Project Settings > API > anon key
+const SUPABASE_URL = 'https://cwtnaoqhbxjvctwfavhn.supabase.co'; // Copie de supabase.com > Project Settings > API
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3dG5hb3FoYnhqdmN0d2ZhdmhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxOTc3MDEsImV4cCI6MjEwNTc3MzcwMX0.9i9Mfr2FH45ZjE-86udXRd6zlAKncQFiOzGBS5MY_0I'; // Copie de supabase.com > Project Settings > API > anon key
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -927,7 +927,7 @@ document.getElementById('winbetBtn').href = WINBET_LINK;
 // ── LINK DA FILA DA RHYNO ──
 // TODO: cole aqui o link oficial da fila do Xand na Rhyno (usado no botão "IR PARA RHYNO").
 // Enquanto estiver vazio, o botão apenas avisa que o link ainda não foi configurado.
-const RHYNO_FILA_LINK = '';
+const RHYNO_FILA_LINK = 'rhyno.gg/xandfps/queue';
 
 // ── SEGURANÇA: senha via SHA-256 — nunca texto puro ──
 const ADMIN_USER_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
