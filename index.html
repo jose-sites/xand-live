@@ -855,7 +855,7 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const SUPABASE_URL = 'https://cwtnaoqhbxjvctwfavhn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3dG5hb3FoYnhqdmN0d2ZhdmhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxOTc3MDEsImV4cCI6MjEwNTc3MzcwMX0.9i9Mfr2FH45ZjE-86udXRd6zlAKncQFiOzGBS5MY_0I';
 
-// Nome da Edge Function que consulta a Rhyno (supabase/functions/rhyno-sync)
+// Nome da Edge Function que consulta a Rhyno (supabase/functions/rhyno-sync/index.ts neste pacote)
 const RHYNO_FUNCTION = 'rhyno-sync';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -898,9 +898,9 @@ const WINBET_LINK = 'https://winebet.com/br?tag=d_6101469m_97143c_';
 document.getElementById('winbetBtn').href = WINBET_LINK;
 
 // ── LINK DA FILA DA RHYNO ──
-// TODO: cole aqui o link oficial da fila do Xand na Rhyno (usado no botão "IR PARA RHYNO").
+// Link oficial da fila do Xand na Rhyno (usado no botão "IR PARA RHYNO"). Conferido em 23/09/2026: @xandfps existe.
 // Enquanto estiver vazio, o botão apenas avisa que o link ainda não foi configurado.
-const RHYNO_FILA_LINK = 'https://rhyno.gg/xandfps/queue';
+const RHYNO_FILA_LINK = 'https://thecoolrhyno.com/xandfps/queue';
 
 // ── ESTADO GLOBAL ──
 let S = {
@@ -1331,7 +1331,7 @@ function siteTab(tab){
 window.siteTab=siteTab;
 
 // ── BOTÃO "IR PARA RHYNO" ──
-// TODO: coloque em RHYNO_FILA_LINK (lá em cima) o link oficial da fila do Xand na Rhyno.
+// RHYNO_FILA_LINK (lá em cima) guarda o link oficial da fila do Xand na Rhyno.
 function initRhynoBtn(){
   const btn=document.getElementById('rhynoBtn');
   if(RHYNO_FILA_LINK){btn.href=RHYNO_FILA_LINK;return;}
